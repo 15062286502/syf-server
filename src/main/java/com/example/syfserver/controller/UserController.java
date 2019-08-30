@@ -18,7 +18,11 @@ public class UserController {
     @RequestMapping("/login")
     public UserEntity userLogin(@RequestParam String name,@RequestParam String password){
         UserEntity user = userService.login(name);
-        System.out.println(user.getPassword().toString());
-        return user;
+        if(user!=null&&user.getPassword().equals(password)){
+            return user;
+        }else {
+            return null;
+        }
+
     }
 }
