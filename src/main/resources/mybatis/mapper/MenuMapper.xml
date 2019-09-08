@@ -4,4 +4,7 @@
     <select id="menuList" parameterType="String" resultType="com.example.syfserver.entity.MenuEntity">
         select * from menu
     </select>
+    <select id="getAllList" resultType="com.example.syfserver.entity.TestEntity">
+        select * from test
+    </select>
 </mapper>

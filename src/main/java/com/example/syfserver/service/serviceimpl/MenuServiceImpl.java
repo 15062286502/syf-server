@@ -2,7 +2,9 @@ package com.example.syfserver.service.serviceimpl;
 
 import com.example.syfserver.dao.MenuDao;
 import com.example.syfserver.entity.MenuEntity;
+import com.example.syfserver.entity.TestEntity;
 import com.example.syfserver.service.MenuService;
+import com.example.syfserver.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -48,5 +50,8 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         return childList;
+    }
+    public List<TestEntity> getTestList(){
+        return menuDao.getAllList();
     }
 }
