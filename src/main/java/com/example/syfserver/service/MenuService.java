@@ -7,6 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MenuService {
-    List<MenuEntity> getAllMenus();
+    List<MenuEntity> getAllMenus(String role);
     List<TestEntity> getTestList();
 }

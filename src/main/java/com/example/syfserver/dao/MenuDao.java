@@ -10,6 +10,6 @@ import java.util.ArrayList;
 @Repository
 @Mapper
 public interface MenuDao {
-    ArrayList<MenuEntity> menuList();
+    ArrayList<MenuEntity> menuList(String role);
     ArrayList<TestEntity> getAllList();
 }

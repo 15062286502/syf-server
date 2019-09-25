@@ -18,8 +18,8 @@ public class MenuServiceImpl implements MenuService {
 
     //获取所有菜单及其子菜单
     @Override
-    public List<MenuEntity> getAllMenus() {
-        List<MenuEntity> rootList = menuDao.menuList();
+    public List<MenuEntity> getAllMenus(String role) {
+        List<MenuEntity> rootList = menuDao.menuList(role);
         List<MenuEntity> menuList = new ArrayList<>();
         for (int i = 0; i < rootList.size(); i++) {
             if (rootList.get(i).getParent_id() == 0) {
