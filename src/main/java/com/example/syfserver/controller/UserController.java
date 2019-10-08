@@ -1,5 +1,6 @@
 package com.example.syfserver.controller;
 
+import com.example.syfserver.entity.PageResultEntity;
 import com.example.syfserver.entity.UserEntity;
 import com.example.syfserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,10 @@ public class UserController {
 
     }
     @RequestMapping("/usermanage")
-    public List<UserEntity> allUser(){
-        List<UserEntity> user = userService.queryAllUsers();
-        return user;
+    public PageResultEntity allUser(@RequestParam("page") int page,@RequestParam("pageSize")int pageSize,@RequestParam("loginName")String queryName){
+        PageResultEntity pgResult = new PageResultEntity();
+        pgResult.setTotal(userService.queryAllUsers(queryName));
+        pgResult.setData(userService.queryUserPageContext(page,pageSize,queryName));
+        return pgResult;
     }
 }

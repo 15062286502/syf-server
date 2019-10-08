@@ -4,7 +4,10 @@
     <select id="userList" parameterType="String" resultType="com.example.syfserver.entity.UserEntity">
         select * from user where name=#{name}
     </select>
-    <select id="allUserList"  resultType="com.example.syfserver.entity.UserEntity">
-        select * from user
+    <select id="allUserList"  resultType="int">
+        select count(*) from user
+    </select>
+    <select id="userPageContext"  resultType="com.example.syfserver.entity.UserEntity">
+        select * from user limit #{page},#{pageSize}
     </select>
 </mapper>

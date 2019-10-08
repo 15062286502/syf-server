@@ -13,5 +13,7 @@ import java.util.List;
 public interface UserDao {
     UserEntity userList(@Param("name") String name);
 
-    List<UserEntity> allUserList();
+    int allUserList();
+
+    List<?> userPageContext(int page, int pageSize);
 }

@@ -8,5 +8,7 @@ import java.util.List;
 public interface UserService {
     UserEntity login(String name);
 
-    List<UserEntity> queryAllUsers();
+    int queryAllUsers(String queryName);
+
+    List<?> queryUserPageContext(int page,int pageSize,String queryName);
 }
