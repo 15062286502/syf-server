@@ -39,4 +39,8 @@ public class UserController {
         pgResult.setData(userService.queryUserPageContext(page * pageSize,pageSize,queryName));
         return pgResult;
     }
+    @RequestMapping("/userDelete")
+    public void userDelete(@RequestBody String userName){
+        userService.deleteSelectUser(userName);
+    }
 }

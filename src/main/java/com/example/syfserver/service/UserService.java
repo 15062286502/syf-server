@@ -6,6 +6,9 @@ import java.util.List;
 
 
 public interface UserService {
+     void deleteSelectUser(String userName);
+
+
     UserEntity login(String name);
 
     int queryAllUsers(String queryName);

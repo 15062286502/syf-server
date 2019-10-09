@@ -16,4 +16,7 @@
     <select id="queryNameResult"  resultType="com.example.syfserver.entity.UserEntity">
         SELECT * FROM (SELECT * FROM user where name like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
     </select>
+    <delete id="excuteDelete">
+        delete from user where name= #{userName}
+    </delete>
 </mapper>

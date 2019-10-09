@@ -20,4 +20,6 @@ public interface UserDao {
     int queryNameCount(String queryName);
 
     List<?> queryNameResult(String queryName,int start, int pageSize);
+
+    void excuteDelete(String userName);
 }
