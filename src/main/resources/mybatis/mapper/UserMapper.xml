@@ -8,6 +8,12 @@
         select count(*) from user
     </select>
     <select id="userPageContext"  resultType="com.example.syfserver.entity.UserEntity">
-        select * from user limit #{page},#{pageSize}
+        select * from user limit #{start},#{pageSize}
+    </select>
+    <select id="queryNameCount"  resultType="int">
+        select count(*) from user where name like CONCAT(CONCAT('%', #{queryName}), '%')
+    </select>
+    <select id="queryNameResult"  resultType="com.example.syfserver.entity.UserEntity">
+        SELECT * FROM (SELECT * FROM user where name like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
     </select>
 </mapper>

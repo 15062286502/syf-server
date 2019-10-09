@@ -10,5 +10,5 @@ public interface UserService {
 
     int queryAllUsers(String queryName);
 
-    List<?> queryUserPageContext(int page,int pageSize,String queryName);
+    List<?> queryUserPageContext(int start,int pageSize,String queryName);
 }

@@ -19,21 +19,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int queryAllUsers(String queryName) {
-        if(queryName==""){
+        if(queryName.equals("")){
             return userdao.allUserList();
         }else if(queryName!=null){
-            return 0;
+            return userdao.queryNameCount(queryName);
         }else{
             return 0;
         }
     }
 
     @Override
-    public List<?> queryUserPageContext(int page,int pageSize,String queryName) {
-        if(queryName==""){
-            return userdao.userPageContext(page,pageSize);
+    public List<?> queryUserPageContext(int start,int pageSize,String queryName) {
+        if(queryName.equals("")){
+            return userdao.userPageContext(start,pageSize);
         }else if(queryName!=null){
-            return null;
+            return userdao.queryNameResult(queryName,start,pageSize);
         }else{
             return null;
         }

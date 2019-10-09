@@ -36,7 +36,7 @@ public class UserController {
     public PageResultEntity allUser(@RequestParam("page") int page,@RequestParam("pageSize")int pageSize,@RequestParam("loginName")String queryName){
         PageResultEntity pgResult = new PageResultEntity();
         pgResult.setTotal(userService.queryAllUsers(queryName));
-        pgResult.setData(userService.queryUserPageContext(page,pageSize,queryName));
+        pgResult.setData(userService.queryUserPageContext(page * pageSize,pageSize,queryName));
         return pgResult;
     }
 }

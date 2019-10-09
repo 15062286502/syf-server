@@ -15,5 +15,9 @@ public interface UserDao {
 
     int allUserList();
 
-    List<?> userPageContext(int page, int pageSize);
+    List<?> userPageContext(int start, int pageSize);
+
+    int queryNameCount(String queryName);
+
+    List<?> queryNameResult(String queryName,int start, int pageSize);
 }

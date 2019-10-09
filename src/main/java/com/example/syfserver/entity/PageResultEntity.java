@@ -3,11 +3,11 @@ package com.example.syfserver.entity;
 import java.util.List;
 
 public class PageResultEntity {
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
@@ -19,6 +19,10 @@ public class PageResultEntity {
         this.data = data;
     }
 
-    private int total;
+    public String toString(){
+        return "PageResult [data=" + data + ", totalCount=" + total + "]";
+    }
+
+    private Integer total;
     private List<?> data;
 }
