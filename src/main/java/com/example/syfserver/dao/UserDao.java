@@ -22,4 +22,6 @@ public interface UserDao {
     List<?> queryNameResult(String queryName,int start, int pageSize);
 
     void excuteDelete(String userName);
+
+    void addNewUser(@Param("addUserEntity")UserEntity addUserEntity);
 }

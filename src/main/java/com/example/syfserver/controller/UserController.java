@@ -43,4 +43,8 @@ public class UserController {
     public void userDelete(@RequestBody String userName){
         userService.deleteSelectUser(userName);
     }
+    @RequestMapping("/userAdd")
+    public void userAdd(@RequestBody UserEntity addUserEntity){
+        userService.addUser(addUserEntity);
+    }
 }
