@@ -46,7 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(UserEntity addUserEntity) {
-        userdao.addNewUser(addUserEntity);
+    public String addUser(UserEntity addUserEntity) {
+        if((userdao.checkAddNewUser(addUserEntity))!=null){
+                return "error";
+        }else{
+            userdao.addNewUser(addUserEntity);
+            return "success";
+        }
     }
 }

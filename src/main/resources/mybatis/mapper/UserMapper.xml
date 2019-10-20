@@ -22,4 +22,7 @@
     <insert id="addNewUser" parameterType="com.example.syfserver.entity.UserEntity">
         insert into user (name,password,role,realName,address,phone) values (#{addUserEntity.name},#{addUserEntity.password},#{addUserEntity.role},#{addUserEntity.realName},#{addUserEntity.address},#{addUserEntity.phone})
     </insert>
+    <select id="checkAddNewUser" parameterType="com.example.syfserver.entity.UserEntity" resultType="com.example.syfserver.entity.UserEntity">
+        select * from user where name = #{addUserEntity.name}
+    </select>
 </mapper>

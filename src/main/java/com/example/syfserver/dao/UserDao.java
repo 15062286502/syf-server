@@ -24,4 +24,6 @@ public interface UserDao {
     void excuteDelete(String userName);
 
     void addNewUser(@Param("addUserEntity")UserEntity addUserEntity);
+
+    List<?> checkAddNewUser(@Param("addUserEntity")UserEntity addUserEntity);
 }
