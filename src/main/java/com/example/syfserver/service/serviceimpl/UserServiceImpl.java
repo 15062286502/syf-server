@@ -25,33 +25,40 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int queryAllUsers(String queryName) {
-        if(queryName.equals("")){
+        if (queryName.equals("")) {
             return userdao.allUserList();
-        }else if(queryName!=null){
+        } else if (queryName != null) {
             return userdao.queryNameCount(queryName);
-        }else{
+        } else {
             return 0;
         }
     }
 
     @Override
-    public List<?> queryUserPageContext(int start,int pageSize,String queryName) {
-        if(queryName.equals("")){
-            return userdao.userPageContext(start,pageSize);
-        }else if(queryName!=null){
-            return userdao.queryNameResult(queryName,start,pageSize);
-        }else{
+    public List<?> queryUserPageContext(int start, int pageSize, String queryName) {
+        if (queryName.equals("")) {
+            return userdao.userPageContext(start, pageSize);
+        } else if (queryName != null) {
+            return userdao.queryNameResult(queryName, start, pageSize);
+        } else {
             return null;
         }
     }
 
     @Override
     public String addUser(UserEntity addUserEntity) {
-        if((userdao.checkAddNewUser(addUserEntity))!=null){
-                return "error";
-        }else{
+        if ((userdao.checkAddNewUser(addUserEntity)).size() != 0) {
+            return "error";
+        } else {
             userdao.addNewUser(addUserEntity);
             return "success";
         }
+    }
+
+    @Override
+    public void editUser(UserEntity editUserEntity) {
+
+        userdao.editUser(editUserEntity);
+
     }
 }

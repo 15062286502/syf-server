@@ -32,19 +32,27 @@ public class UserController {
         }
 
     }
+
     @RequestMapping("/usermanage")
-    public PageResultEntity allUser(@RequestParam("page") int page,@RequestParam("pageSize")int pageSize,@RequestParam("loginName")String queryName){
+    public PageResultEntity allUser(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestParam("loginName") String queryName) {
         PageResultEntity pgResult = new PageResultEntity();
         pgResult.setTotal(userService.queryAllUsers(queryName));
-        pgResult.setData(userService.queryUserPageContext(page * pageSize,pageSize,queryName));
+        pgResult.setData(userService.queryUserPageContext(page * pageSize, pageSize, queryName));
         return pgResult;
     }
+
     @RequestMapping("/userDelete")
-    public void userDelete(@RequestBody String userName){
+    public void userDelete(@RequestBody String userName) {
         userService.deleteSelectUser(userName);
     }
+
     @RequestMapping("/userAdd")
-    public String userAdd(@RequestBody UserEntity addUserEntity){
-       return userService.addUser(addUserEntity);
+    public String userAdd(@RequestBody UserEntity addUserEntity) {
+        return userService.addUser(addUserEntity);
+    }
+
+    @RequestMapping("/userEdit")
+    public void userEdit(@RequestBody UserEntity editUserEntity){
+         userService.editUser(editUserEntity);
     }
 }

@@ -26,4 +26,6 @@ public interface UserDao {
     void addNewUser(@Param("addUserEntity")UserEntity addUserEntity);
 
     List<?> checkAddNewUser(@Param("addUserEntity")UserEntity addUserEntity);
+
+    void editUser(@Param("editUserEntity")UserEntity editUserEntity);
 }

@@ -16,4 +16,6 @@ public interface UserService {
     List<?> queryUserPageContext(int start,int pageSize,String queryName);
 
     String addUser(UserEntity addUserEntity);
+
+    void editUser(UserEntity editUserEntity);
 }
