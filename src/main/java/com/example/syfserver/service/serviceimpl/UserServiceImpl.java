@@ -6,6 +6,7 @@ import com.example.syfserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.List;
 
 @Service
@@ -60,5 +61,41 @@ public class UserServiceImpl implements UserService {
 
         userdao.editUser(editUserEntity);
 
+    }
+
+    @Override
+    public String uploadImage(File file) {
+        InputStream is = null;
+        OutputStream os = null;
+        StringBuffer sb = new StringBuffer("D:\\picture_resource\\user\\");
+        StringBuffer url = new StringBuffer("http://localhost:8020/resource/user/");
+        try {
+            sb.append(file.getName());
+            is = new FileInputStream(file);
+            os = new FileOutputStream(sb.toString());
+            byte[] b = new byte[is.available()];
+            is.read(b, 0, b.length);
+            os.write(b);
+            url.append(file.getName());
+            //userdao.uploadImage(url);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if(os!=null){
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return url.toString();
     }
 }

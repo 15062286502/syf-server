@@ -21,6 +21,16 @@ public class UserEntity {
 
     private String realName;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    private String image;
+
     public int getId() {
         return id;
     }

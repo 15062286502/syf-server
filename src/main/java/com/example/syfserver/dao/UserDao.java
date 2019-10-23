@@ -28,4 +28,6 @@ public interface UserDao {
     List<?> checkAddNewUser(@Param("addUserEntity")UserEntity addUserEntity);
 
     void editUser(@Param("editUserEntity")UserEntity editUserEntity);
+
+    void uploadImage(StringBuffer url);
 }

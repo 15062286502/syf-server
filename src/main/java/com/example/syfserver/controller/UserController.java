@@ -9,9 +9,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.*;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
 
 
 @RestController
@@ -54,5 +64,13 @@ public class UserController {
     @RequestMapping("/userEdit")
     public void userEdit(@RequestBody UserEntity editUserEntity){
          userService.editUser(editUserEntity);
+    }
+
+    @RequestMapping("/userImage")
+    public String uploadNewImage(@RequestParam("file") MultipartFile multipartFile,@RequestParam("userName")String name){
+        File file = MultipartFileToFile(multipartFile);
+        String imageUrl = userService.uploadImage(file);
+        System.out.println(name);
+            return imageUrl;
     }
 }

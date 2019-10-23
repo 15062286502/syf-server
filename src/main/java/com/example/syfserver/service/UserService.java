@@ -2,6 +2,7 @@ package com.example.syfserver.service;
 
 import com.example.syfserver.entity.UserEntity;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -18,4 +19,6 @@ public interface UserService {
     String addUser(UserEntity addUserEntity);
 
     void editUser(UserEntity editUserEntity);
+
+    String uploadImage(File file);
 }
