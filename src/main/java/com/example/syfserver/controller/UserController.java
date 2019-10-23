@@ -69,8 +69,7 @@ public class UserController {
     @RequestMapping("/userImage")
     public String uploadNewImage(@RequestParam("file") MultipartFile multipartFile,@RequestParam("userName")String name){
         File file = MultipartFileToFile(multipartFile);
-        String imageUrl = userService.uploadImage(file);
-        System.out.println(name);
+        String imageUrl = userService.uploadImage(file,name);
             return imageUrl;
     }
 }

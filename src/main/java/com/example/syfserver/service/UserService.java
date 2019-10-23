@@ -20,5 +20,5 @@ public interface UserService {
 
     void editUser(UserEntity editUserEntity);
 
-    String uploadImage(File file);
+    String uploadImage(File file,String fileName);
 }

@@ -29,5 +29,5 @@ public interface UserDao {
 
     void editUser(@Param("editUserEntity")UserEntity editUserEntity);
 
-    void uploadImage(StringBuffer url);
+    void uploadImage(@Param("url") String url,@Param("fileName") String fileName);
 }

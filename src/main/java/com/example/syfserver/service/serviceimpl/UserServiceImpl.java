@@ -64,20 +64,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String uploadImage(File file) {
+    public String uploadImage(File file, String fileName) {
         InputStream is = null;
         OutputStream os = null;
         StringBuffer sb = new StringBuffer("D:\\picture_resource\\user\\");
         StringBuffer url = new StringBuffer("http://localhost:8020/resource/user/");
         try {
-            sb.append(file.getName());
+            sb.append(fileName + ".jpg");
             is = new FileInputStream(file);
             os = new FileOutputStream(sb.toString());
             byte[] b = new byte[is.available()];
             is.read(b, 0, b.length);
             os.write(b);
-            url.append(file.getName());
-            //userdao.uploadImage(url);
+            url.append(fileName + ".jpg");
+            userdao.uploadImage(url.toString(),fileName);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
