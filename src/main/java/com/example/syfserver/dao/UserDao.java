@@ -15,11 +15,11 @@ public interface UserDao {
 
     int allUserList();
 
-    List<?> userPageContext(int start, int pageSize);
+    List<UserEntity> userPageContext(int start, int pageSize);
 
     int queryNameCount(String queryName);
 
-    List<?> queryNameResult(String queryName,int start, int pageSize);
+    List<UserEntity> queryNameResult(String queryName,int start, int pageSize);
 
     void excuteDelete(String userName);
 

@@ -35,7 +35,8 @@ public class UserController {
         String name = loginUser.getName();
         String password = getMD5(loginUser.getPassword());
         UserEntity user = userService.login(name);
-        if (user.getPassword()!= null&&user.getPassword() .equals(password) ) {
+        if (user.getPassword() != null && user.getPassword().equals(password)) {
+            user.setPassword("");
             return user;
         } else {
             return null;
@@ -62,14 +63,14 @@ public class UserController {
     }
 
     @RequestMapping("/userEdit")
-    public void userEdit(@RequestBody UserEntity editUserEntity){
-         userService.editUser(editUserEntity);
+    public void userEdit(@RequestBody UserEntity editUserEntity) {
+        userService.editUser(editUserEntity);
     }
 
     @RequestMapping("/userImage")
-    public String uploadNewImage(@RequestParam("file") MultipartFile multipartFile,@RequestParam("userName")String name){
+    public String uploadNewImage(@RequestParam("file") MultipartFile multipartFile, @RequestParam("userName") String name) {
         File file = MultipartFileToFile(multipartFile);
-        String imageUrl = userService.uploadImage(file,name);
-            return imageUrl;
+        String imageUrl = userService.uploadImage(file, name);
+        return imageUrl;
     }
 }

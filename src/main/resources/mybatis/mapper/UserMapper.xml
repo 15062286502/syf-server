@@ -20,13 +20,13 @@
         delete from user where name= #{userName}
     </delete>
     <insert id="addNewUser" parameterType="com.example.syfserver.entity.UserEntity">
-        insert into user (name,password,role,realName,address,phone) values (#{addUserEntity.name},#{addUserEntity.password},#{addUserEntity.role},#{addUserEntity.realName},#{addUserEntity.address},#{addUserEntity.phone})
+        insert into user (name,password,role,realName,address,phone) values (#{addUserEntity.name},md5(#{addUserEntity.password}),#{addUserEntity.role},#{addUserEntity.realName},#{addUserEntity.address},#{addUserEntity.phone})
     </insert>
     <select id="checkAddNewUser" parameterType="com.example.syfserver.entity.UserEntity" resultType="com.example.syfserver.entity.UserEntity">
         select * from user where name = #{addUserEntity.name}
     </select>
     <update id="editUser" parameterType="com.example.syfserver.entity.UserEntity">
-        update user set name = #{editUserEntity.name}, password =#{editUserEntity.password},role = #{editUserEntity.role},realName = #{editUserEntity.realName},address= #{editUserEntity.address},phone = #{editUserEntity.phone} where id = #{editUserEntity.id}
+        update user set name = #{editUserEntity.name}, password =md5(#{editUserEntity.password}),role = #{editUserEntity.role},realName = #{editUserEntity.realName},address= #{editUserEntity.address},phone = #{editUserEntity.phone} where id = #{editUserEntity.id}
     </update>
     <update id="uploadImage" parameterType="String">
         update user set image = #{url} where name = #{fileName}

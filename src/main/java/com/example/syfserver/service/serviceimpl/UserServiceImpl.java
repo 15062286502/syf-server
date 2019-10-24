@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.syfserver.tools.RemovePassword.removePassword;
 import static com.example.syfserver.tools.Resource.USER_IMAGE_ADDRESS;
 import static com.example.syfserver.tools.Resource.USER_IMAGE_URL;
 
@@ -42,12 +43,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<?> queryUserPageContext(int start, int pageSize, String queryName) {
-        if (queryName.equals("")) {
-            return userdao.userPageContext(start, pageSize);
-        } else if (queryName != null) {
-            return userdao.queryNameResult(queryName, start, pageSize);
+        List<UserEntity> security;
+        if (queryName.equals("") || queryName == null) {
+             security = userdao.userPageContext(start, pageSize);
+            return removePassword(security);
         } else {
-            return null;
+            security = userdao.queryNameResult(queryName, start, pageSize);
+            return removePassword(security);
         }
     }
 
@@ -83,8 +85,8 @@ public class UserServiceImpl implements UserService {
             byte[] b = new byte[is.available()];
             is.read(b, 0, b.length);
             os.write(b);
-            url.append(fileName+suffix + ".jpg");
-            userdao.uploadImage(url.toString(),fileName);
+            url.append(fileName + suffix + ".jpg");
+            userdao.uploadImage(url.toString(), fileName);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
                 if (is != null) {
                     is.close();
                 }
-                if(os!=null){
+                if (os != null) {
                     os.close();
                 }
             } catch (IOException e) {
