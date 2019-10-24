@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.syfserver.tools.Resource.USER_IMAGE_ADDRESS;
@@ -72,14 +74,16 @@ public class UserServiceImpl implements UserService {
         OutputStream os = null;
         StringBuffer sb = new StringBuffer(USER_IMAGE_ADDRESS);
         StringBuffer url = new StringBuffer(USER_IMAGE_URL);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String suffix = dateFormat.format(new Date());
         try {
-            sb.append(fileName + ".jpg");
+            sb.append(fileName + suffix + ".jpg");
             is = new FileInputStream(file);
             os = new FileOutputStream(sb.toString());
             byte[] b = new byte[is.available()];
             is.read(b, 0, b.length);
             os.write(b);
-            url.append(fileName + ".jpg");
+            url.append(fileName+suffix + ".jpg");
             userdao.uploadImage(url.toString(),fileName);
 
         } catch (FileNotFoundException e) {
