@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.List;
 
+import static com.example.syfserver.tools.Resource.USER_IMAGE_ADDRESS;
+import static com.example.syfserver.tools.Resource.USER_IMAGE_URL;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -67,8 +70,8 @@ public class UserServiceImpl implements UserService {
     public String uploadImage(File file, String fileName) {
         InputStream is = null;
         OutputStream os = null;
-        StringBuffer sb = new StringBuffer("D:\\picture_resource\\user\\");
-        StringBuffer url = new StringBuffer("http://localhost:8020/resource/user/");
+        StringBuffer sb = new StringBuffer(USER_IMAGE_ADDRESS);
+        StringBuffer url = new StringBuffer(USER_IMAGE_URL);
         try {
             sb.append(fileName + ".jpg");
             is = new FileInputStream(file);
