@@ -11,5 +11,6 @@ import java.util.ArrayList;
 @Mapper
 public interface MenuDao {
     ArrayList<MenuEntity> menuList(String role);
+
     ArrayList<TestEntity> getAllList();
 }

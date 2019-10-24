@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.provider.MD5;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.example.syfserver.tools.Encrypter.getMD5;
 import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
 
 
@@ -31,9 +33,9 @@ public class UserController {
     @RequestMapping("/login")
     public UserEntity userLogin(@RequestBody UserEntity loginUser) {
         String name = loginUser.getName();
-        String password = loginUser.getPassword();
+        String password = getMD5(loginUser.getPassword());
         UserEntity user = userService.login(name);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user.getPassword()!= null&&user.getPassword() .equals(password) ) {
             return user;
         } else {
             return null;
