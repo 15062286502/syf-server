@@ -1,14 +1,20 @@
 package com.example.syfserver.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -27,5 +33,11 @@ public class VxController {
     @RequestMapping("/getAllList")
     public List<?> getFoodList(){
         return goodsService.doGetAllList();
+    }
+
+    @RequestMapping("/getOrder")
+    public Map<String,String> getOrderList(@RequestParam Map<String ,String> good){
+
+        return goodsService.doGetOrder(good);
     }
 }

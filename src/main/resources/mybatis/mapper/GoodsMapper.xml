@@ -8,4 +8,8 @@
     <select id="doGetAllKind"  resultType="String">
         SELECT DISTINCT  kind FROM goods
     </select>
+
+    <insert id="doGetOrder" parameterType="com.example.syfserver.entity.OrderEntity">
+        insert into take_in_order values (#{orderEntity.id},#{orderEntity.identifier},#{orderEntity.time},#{orderEntity.desc},#{orderEntity.state},#{orderEntity.mealNumber},#{orderEntity.remarks},#{orderEntity.sumMoney},#{orderEntity.cutMoney},#{orderEntity.cupNumber})
+    </insert>
 </mapper>
