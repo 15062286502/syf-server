@@ -15,4 +15,6 @@ public interface GoodsDao {
     List<String> doGetAllKind();
 
     void doGetOrder(@Param("orderEntity")OrderEntity orderEntity);
+
+    List<OrderEntity> doGetTakeInOrder(@Param("openId") String openId);
 }

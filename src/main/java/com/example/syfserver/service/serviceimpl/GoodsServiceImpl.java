@@ -66,6 +66,7 @@ public class GoodsServiceImpl implements GoodsService {
         orderEntity.setRemarks(good.get("remarks"));
         orderEntity.setSumMoney(good.get("sumMoney"));
         orderEntity.setDesc(good.get("cartList"));
+        orderEntity.setOpenId(good.get("openId"));
 
         goodsDao.doGetOrder(orderEntity);
         orderDetail.put("identifier",orderEntity.getIdentifier());
@@ -73,5 +74,10 @@ public class GoodsServiceImpl implements GoodsService {
         orderDetail.put("time",dateFormat1.format(orderEntity.getTime()));
         orderDetail.put("mealNumber",orderEntity.getMealNumber());
         return orderDetail;
+    }
+
+    @Override
+    public List<OrderEntity> doGetRTakeInOrder(Map<String, String> token) {
+        return goodsDao.doGetTakeInOrder(token.get("openId"));
     }
 }

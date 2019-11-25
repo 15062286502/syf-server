@@ -3,6 +3,7 @@ package com.example.syfserver.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.syfserver.entity.GoodsEntity;
+import com.example.syfserver.entity.OrderEntity;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,11 @@ public class VxController {
     public Map<String,String> getOrderList(@RequestParam Map<String ,String> good){
 
         return goodsService.doGetOrder(good);
+    }
+
+    @RequestMapping("/takeInOrder")
+    public List<OrderEntity> getTakeInOrderList(@RequestParam Map<String ,String> token){
+
+        return goodsService.doGetRTakeInOrder(token);
     }
 }

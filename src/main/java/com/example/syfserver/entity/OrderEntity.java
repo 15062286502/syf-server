@@ -13,6 +13,17 @@ public class OrderEntity {
     private String sumMoney;
     private String cutMoney;
     private String cupNumber;
+    private String openId;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+
 
     public String getId() {
         return id;
