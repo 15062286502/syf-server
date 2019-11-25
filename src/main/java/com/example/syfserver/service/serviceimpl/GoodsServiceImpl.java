@@ -57,7 +57,7 @@ public class GoodsServiceImpl implements GoodsService {
 
         orderEntity.setId(UUID.randomUUID().toString().replaceAll("-",""));
         orderEntity.setIdentifier(sb.toString());
-        orderEntity.setTime(date);
+        orderEntity.setCreateTime(date);
         orderEntity.setMealNumber(Encrypter.genRandomNum());
         orderEntity.setState("0");
 
@@ -65,13 +65,13 @@ public class GoodsServiceImpl implements GoodsService {
         orderEntity.setCutMoney(good.get("cutMoney"));
         orderEntity.setRemarks(good.get("remarks"));
         orderEntity.setSumMoney(good.get("sumMoney"));
-        orderEntity.setDesc(good.get("cartList"));
+        orderEntity.setOrderDesc(good.get("cartList"));
         orderEntity.setOpenId(good.get("openId"));
 
         goodsDao.doGetOrder(orderEntity);
         orderDetail.put("identifier",orderEntity.getIdentifier());
         SimpleDateFormat dateFormat1= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        orderDetail.put("time",dateFormat1.format(orderEntity.getTime()));
+        orderDetail.put("time",dateFormat1.format(orderEntity.getCreateTime()));
         orderDetail.put("mealNumber",orderEntity.getMealNumber());
         return orderDetail;
     }

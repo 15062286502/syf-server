@@ -4,16 +4,33 @@ import java.util.Date;
 
 public class OrderEntity {
     private String id;
-    private  String identifier;
-    private Date time;
+    private String identifier;
+    private Date createTime;
     private String state;
     private String mealNumber;
-    private String desc;
+    private String orderDesc;
     private String remarks;
     private String sumMoney;
     private String cutMoney;
     private String cupNumber;
     private String openId;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getOrderDesc() {
+        return orderDesc;
+    }
+
+    public void setOrderDesc(String orderDesc) {
+        this.orderDesc = orderDesc;
+    }
+
 
     public String getOpenId() {
         return openId;
@@ -22,7 +39,6 @@ public class OrderEntity {
     public void setOpenId(String openId) {
         this.openId = openId;
     }
-
 
 
     public String getId() {
@@ -41,13 +57,6 @@ public class OrderEntity {
         this.identifier = identifier;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
 
     public String getState() {
         return state;
@@ -65,13 +74,6 @@ public class OrderEntity {
         this.mealNumber = mealNumber;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
 
     public String getRemarks() {
         return remarks;
