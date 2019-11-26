@@ -11,5 +11,5 @@ public interface GoodsService {
 
     Map<String,String> doGetOrder(Map<String ,String> good);
 
-    List<OrderEntity> doGetRTakeInOrder(Map<String ,String> token);
+    List<Map<?,?>> doGetRTakeInOrder(Map<String ,String> token);
 }

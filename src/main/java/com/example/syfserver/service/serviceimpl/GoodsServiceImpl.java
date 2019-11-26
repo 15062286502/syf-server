@@ -1,5 +1,6 @@
 package com.example.syfserver.service.serviceimpl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.example.syfserver.dao.GoodsDao;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
@@ -77,7 +78,18 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<OrderEntity> doGetRTakeInOrder(Map<String, String> token) {
-        return goodsDao.doGetTakeInOrder(token.get("openId"));
+    public List<Map<?,?>> doGetRTakeInOrder(Map<String, String> token) {
+        List<Map<?,?>> realOrderList = new ArrayList<>();
+        List<OrderEntity> orderList = goodsDao.doGetTakeInOrder(token.get("openId"));
+        for (OrderEntity orderEntity:
+        orderList) {
+            Map<String,Object> orderMap = new HashMap<>();
+            orderMap.put("orderEntity",orderEntity);
+            JSONArray orderJsonArray = JSONArray.parseArray(orderEntity.getOrderDesc());
+            orderMap.put("orderName",(orderJsonArray.getJSONObject(0)).get("name"));
+            orderMap.put("orderImg",(orderJsonArray.getJSONObject(0)).get("img"));
+            realOrderList.add(orderMap);
+        }
+        return realOrderList;
     }
 }

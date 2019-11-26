@@ -43,7 +43,7 @@ public class VxController {
     }
 
     @RequestMapping("/takeInOrder")
-    public List<OrderEntity> getTakeInOrderList(@RequestParam Map<String ,String> token){
+    public List<Map<?,?>> getTakeInOrderList(@RequestParam Map<String ,String> token){
 
         return goodsService.doGetRTakeInOrder(token);
     }

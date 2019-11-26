@@ -10,7 +10,7 @@
     </select>
 
     <insert id="doGetOrder" parameterType="com.example.syfserver.entity.OrderEntity">
-        insert into take_in_order (id,identifier,createTime,orderDesc,state,mealNumber,remarks,sumMoney,cutMoney,cupNumber,openId) values (#{orderEntity.id},#{orderEntity.identifier},#{orderEntity.time},#{orderEntity.desc},#{orderEntity.state},#{orderEntity.mealNumber},#{orderEntity.remarks},#{orderEntity.sumMoney},#{orderEntity.cutMoney},#{orderEntity.cupNumber},#{orderEntity.openId})
+        insert into take_in_order (id,identifier,createTime,orderDesc,state,mealNumber,remarks,sumMoney,cutMoney,cupNumber,openId) values (#{orderEntity.id},#{orderEntity.identifier},#{orderEntity.createTime},#{orderEntity.orderDesc},#{orderEntity.state},#{orderEntity.mealNumber},#{orderEntity.remarks},#{orderEntity.sumMoney},#{orderEntity.cutMoney},#{orderEntity.cupNumber},#{orderEntity.openId})
     </insert>
 
     <select id="doGetTakeInOrder"  parameterType="String" resultType="com.example.syfserver.entity.OrderEntity">
