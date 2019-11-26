@@ -14,6 +14,6 @@
     </insert>
 
     <select id="doGetTakeInOrder"  parameterType="String" resultType="com.example.syfserver.entity.OrderEntity">
-        SELECT  *   FROM take_in_order where openId = #{openId}
+        SELECT  *   FROM take_in_order where openId = #{openId} order by createTime desc
     </select>
 </mapper>
