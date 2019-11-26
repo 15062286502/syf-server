@@ -84,10 +84,13 @@ public class GoodsServiceImpl implements GoodsService {
         for (OrderEntity orderEntity:
         orderList) {
             Map<String,Object> orderMap = new HashMap<>();
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             orderMap.put("orderEntity",orderEntity);
             JSONArray orderJsonArray = JSONArray.parseArray(orderEntity.getOrderDesc());
             orderMap.put("orderName",(orderJsonArray.getJSONObject(0)).get("name"));
             orderMap.put("orderImg",(orderJsonArray.getJSONObject(0)).get("img"));
+            orderMap.put("orderTime",sd.format(orderEntity.getCreateTime()));
+            orderMap.put("orderDesc",(orderJsonArray.getJSONObject(0)).get("detail"));
             realOrderList.add(orderMap);
         }
         return realOrderList;
