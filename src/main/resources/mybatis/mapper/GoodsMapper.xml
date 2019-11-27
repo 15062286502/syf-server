@@ -16,4 +16,12 @@
     <select id="doGetTakeInOrder"  parameterType="String" resultType="com.example.syfserver.entity.OrderEntity">
         SELECT  *   FROM take_in_order where openId = #{openId} order by createTime desc
     </select>
+
+    <insert id="doSaveVxUser" parameterType="com.example.syfserver.entity.VxUserEntity">
+        insert into vx_user (id,vxName,vxImg,vxAddress)value (#{vxUserEntity.id},#{vxUserEntity.vxName},#{vxUserEntity.vxImg},#{vxUserEntity.vxAddress})
+    </insert>
+
+    <select id="doSelectVxUser" parameterType="String" resultType="com.example.syfserver.entity.VxUserEntity">
+        select * from vx_user where id = #{id}
+    </select>
 </mapper>

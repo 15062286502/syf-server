@@ -12,4 +12,6 @@ public interface GoodsService {
     Map<String,String> doGetOrder(Map<String ,String> good);
 
     List<Map<?,?>> doGetRTakeInOrder(Map<String ,String> token);
+
+    void doSaveVxUser(Map<String,String> userInfo);
 }

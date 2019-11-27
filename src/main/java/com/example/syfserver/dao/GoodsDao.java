@@ -2,6 +2,7 @@ package com.example.syfserver.dao;
 
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
+import com.example.syfserver.entity.VxUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,8 @@ public interface GoodsDao {
     void doGetOrder(@Param("orderEntity")OrderEntity orderEntity);
 
     List<OrderEntity> doGetTakeInOrder(@Param("openId") String openId);
+
+    void doSaveVxUser(@Param("vxUserEntity") VxUserEntity vxUserEntity);
+
+    List<VxUserEntity> doSelectVxUser(@Param("id")String vxId);
 }

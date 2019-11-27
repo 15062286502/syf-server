@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.example.syfserver.dao.GoodsDao;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
+import com.example.syfserver.entity.VxUserEntity;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.tools.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,15 +49,15 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Map<String, String> doGetOrder(Map<String, String> good) {
         Map<String, String> orderDetail = new HashMap<>();
-        OrderEntity orderEntity =new OrderEntity();
+        OrderEntity orderEntity = new OrderEntity();
 
-        StringBuffer sb= new StringBuffer();
+        StringBuffer sb = new StringBuffer();
         sb.append("syf");
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyyMMddhhmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         sb.append(dateFormat.format(date));
 
-        orderEntity.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        orderEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         orderEntity.setIdentifier(sb.toString());
         orderEntity.setCreateTime(date);
         orderEntity.setMealNumber(Encrypter.genRandomNum());
@@ -70,29 +71,43 @@ public class GoodsServiceImpl implements GoodsService {
         orderEntity.setOpenId(good.get("openId"));
 
         goodsDao.doGetOrder(orderEntity);
-        orderDetail.put("identifier",orderEntity.getIdentifier());
-        SimpleDateFormat dateFormat1= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        orderDetail.put("time",dateFormat1.format(orderEntity.getCreateTime()));
-        orderDetail.put("mealNumber",orderEntity.getMealNumber());
+        orderDetail.put("identifier", orderEntity.getIdentifier());
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        orderDetail.put("time", dateFormat1.format(orderEntity.getCreateTime()));
+        orderDetail.put("mealNumber", orderEntity.getMealNumber());
         return orderDetail;
     }
 
     @Override
-    public List<Map<?,?>> doGetRTakeInOrder(Map<String, String> token) {
-        List<Map<?,?>> realOrderList = new ArrayList<>();
+    public List<Map<?, ?>> doGetRTakeInOrder(Map<String, String> token) {
+        List<Map<?, ?>> realOrderList = new ArrayList<>();
         List<OrderEntity> orderList = goodsDao.doGetTakeInOrder(token.get("openId"));
-        for (OrderEntity orderEntity:
-        orderList) {
-            Map<String,Object> orderMap = new HashMap<>();
+        for (OrderEntity orderEntity :
+                orderList) {
+            Map<String, Object> orderMap = new HashMap<>();
             SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            orderMap.put("orderEntity",orderEntity);
+            orderMap.put("orderEntity", orderEntity);
             JSONArray orderJsonArray = JSONArray.parseArray(orderEntity.getOrderDesc());
-            orderMap.put("orderName",(orderJsonArray.getJSONObject(0)).get("name"));
-            orderMap.put("orderImg",(orderJsonArray.getJSONObject(0)).get("img"));
-            orderMap.put("orderTime",sd.format(orderEntity.getCreateTime()));
-            orderMap.put("orderDesc",(orderJsonArray.getJSONObject(0)).get("detail"));
+            orderMap.put("orderName", (orderJsonArray.getJSONObject(0)).get("name"));
+            orderMap.put("orderImg", (orderJsonArray.getJSONObject(0)).get("img"));
+            orderMap.put("orderTime", sd.format(orderEntity.getCreateTime()));
+            orderMap.put("orderDesc", (orderJsonArray.getJSONObject(0)).get("detail"));
             realOrderList.add(orderMap);
         }
         return realOrderList;
+    }
+
+    @Override
+    public void doSaveVxUser(Map<String, String> userInfo) {
+        List<VxUserEntity> vxUserList = goodsDao.doSelectVxUser(userInfo.get("openId"));
+        if (vxUserList != null && vxUserList.isEmpty()) {
+            VxUserEntity vxUserEntity = new VxUserEntity();
+            vxUserEntity.setId(userInfo.get("openId"));
+            vxUserEntity.setVxName(userInfo.get("vxName"));
+            vxUserEntity.setVxImg(userInfo.get("vxImg"));
+            vxUserEntity.setVxAddress(userInfo.get("vxAddress"));
+            goodsDao.doSaveVxUser(vxUserEntity);
+        }
+
     }
 }
