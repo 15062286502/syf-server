@@ -1,18 +1,14 @@
 package com.example.syfserver.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.example.syfserver.entity.GoodsEntity;
-import com.example.syfserver.entity.OrderEntity;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -50,4 +46,19 @@ public class VxController {
                 goodsService.doSaveVxUser(userInfo);
     }
 
+    @RequestMapping("/saveAddress")
+    public void saveVxAddress(@RequestParam Map<String ,String> vxAddress){
+        goodsService.doSaveVxAddress(vxAddress);
+    }
+
+    @RequestMapping("/getAddress")
+    public List<?> getVxAddress(@RequestParam Map<String ,String> openId){
+
+        return goodsService.doSelectVxAddress(openId);
+    }
+
+    @RequestMapping("/deleteAddress")
+    public void deleteVxAddress(@RequestParam Map<String ,String> index){
+        goodsService.doDeleteVxAddress(index);
+    }
 }

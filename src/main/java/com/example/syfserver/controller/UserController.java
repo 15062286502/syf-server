@@ -4,21 +4,13 @@ import com.example.syfserver.entity.PageResultEntity;
 import com.example.syfserver.entity.UserEntity;
 import com.example.syfserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import sun.security.provider.MD5;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.io.File;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
 import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;

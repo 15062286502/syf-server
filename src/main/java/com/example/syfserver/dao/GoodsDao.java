@@ -22,4 +22,8 @@ public interface GoodsDao {
     void doSaveVxUser(@Param("vxUserEntity") VxUserEntity vxUserEntity);
 
     List<VxUserEntity> doSelectVxUser(@Param("id")String vxId);
+
+    void doSaveVxAddress(@Param("address") String address,@Param("openId") String openId);
+
+    List<?> doSelectVxAddress(@Param("id")String vxId);
 }

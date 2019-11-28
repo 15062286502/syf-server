@@ -1,6 +1,8 @@
 package com.example.syfserver.service.serviceimpl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.syfserver.dao.GoodsDao;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
@@ -110,4 +112,60 @@ public class GoodsServiceImpl implements GoodsService {
         }
 
     }
+
+    @Override
+    public void doSaveVxAddress(Map<String, String> address) {
+
+        List<VxUserEntity> vxUserList = goodsDao.doSelectVxUser(address.get("openId"));
+
+        JSONArray addressArray = JSONArray.parseArray(vxUserList.get(0).getVxAddress());
+        if (addressArray != null) {
+            addressArray.add(JSONObject.parseObject(address.get("address")));
+        } else {
+            addressArray = new JSONArray();
+            addressArray.add(JSONObject.parseObject(address.get("address")));
+        }
+
+
+        goodsDao.doSaveVxAddress(addressArray.toString(), address.get("openId"));
+    }
+
+    @Override
+    public List<?> doSelectVxAddress(Map<String, String> openId) {
+        List<JSONArray> addressList = new ArrayList();
+        List<?> address = goodsDao.doSelectVxAddress(openId.get("openId"));
+        if (address != null && !address.isEmpty()) {
+            addressList.add(JSONArray.parseArray(address.get(0).toString()));
+        }
+        return addressList;
+    }
+
+    @Override
+    public void doDeleteVxAddress(Map<String, String> index) {
+        List<?> address = goodsDao.doSelectVxAddress(index.get("openId"));
+        if (address != null && !address.isEmpty()) {
+
+            List<String> list = JSON.parseArray(address.get(0).toString(), String.class);
+
+            if (list != null && !list.isEmpty()) {
+                int index1 = Integer.parseInt(index.get("index"));
+
+                list.remove(index1);
+
+                JSONArray jsonArray = new JSONArray();
+
+
+                for (int i = 0; i < list.size(); i++) {
+
+                    JSONObject jsonObject = JSONObject.parseObject(list.get(i));
+                    jsonArray.add(jsonObject);
+                }
+
+                goodsDao.doSaveVxAddress(jsonArray.toJSONString(), index.get("openId"));
+            }
+
+        }
+    }
+
+
 }

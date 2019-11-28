@@ -14,4 +14,10 @@ public interface GoodsService {
     List<Map<?,?>> doGetRTakeInOrder(Map<String ,String> token);
 
     void doSaveVxUser(Map<String,String> userInfo);
+
+    void doSaveVxAddress(Map<String,String> address);
+
+    List<?> doSelectVxAddress(Map<String,String> openId);
+
+    void doDeleteVxAddress(Map<String,String> index);
 }

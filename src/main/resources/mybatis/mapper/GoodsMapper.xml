@@ -24,4 +24,12 @@
     <select id="doSelectVxUser" parameterType="String" resultType="com.example.syfserver.entity.VxUserEntity">
         select * from vx_user where id = #{id}
     </select>
+
+    <update id="doSaveVxAddress" parameterType="String">
+        update vx_user set vxAddress = #{address} where id = #{openId}
+    </update>
+
+    <select id="doSelectVxAddress" parameterType="String" resultType="String">
+        select vxAddress from vx_user where id = #{id}
+    </select>
 </mapper>
