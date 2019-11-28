@@ -134,7 +134,7 @@ public class GoodsServiceImpl implements GoodsService {
     public List<?> doSelectVxAddress(Map<String, String> openId) {
         List<JSONArray> addressList = new ArrayList();
         List<?> address = goodsDao.doSelectVxAddress(openId.get("openId"));
-        if (address != null && !address.isEmpty()) {
+        if (address != null && !address.isEmpty() && address.get(0) != null) {
             addressList.add(JSONArray.parseArray(address.get(0).toString()));
         }
         return addressList;
