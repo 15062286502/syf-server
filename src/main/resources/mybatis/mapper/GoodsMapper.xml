@@ -32,4 +32,12 @@
     <select id="doSelectVxAddress" parameterType="String" resultType="String">
         select vxAddress from vx_user where id = #{id}
     </select>
+
+    <insert id="doGetTakeOutOrder" parameterType="com.example.syfserver.entity.TakeOutOrderEntity">
+        insert into take_out_order (id,identifier,createTime,orderDesc,state,remarks,sumMoney,cupNumber,openId,evaluate,deliveryPerson,address) values (#{takeOutOrderEntity.id},#{takeOutOrderEntity.identifier},#{takeOutOrderEntity.createTime},#{takeOutOrderEntity.orderDesc},#{takeOutOrderEntity.state},#{takeOutOrderEntity.remarks},#{takeOutOrderEntity.sumMoney},#{takeOutOrderEntity.cupNumber},#{takeOutOrderEntity.openId},#{takeOutOrderEntity.evaluate},#{takeOutOrderEntity.deliveryPerson},#{takeOutOrderEntity.address})
+    </insert>
+
+    <select id="doGetAllTakeInOrder"  parameterType="String" resultType="com.example.syfserver.entity.TakeOutOrderEntity">
+        SELECT  *   FROM take_out_order where openId = #{openId} order by createTime desc
+    </select>
 </mapper>

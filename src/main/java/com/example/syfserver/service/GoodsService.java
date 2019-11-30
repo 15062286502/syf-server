@@ -20,4 +20,9 @@ public interface GoodsService {
     List<?> doSelectVxAddress(Map<String,String> openId);
 
     void doDeleteVxAddress(Map<String,String> index);
+
+    Map<String,String> doGetTakeOutOrder(Map<String ,String> good);
+
+    List<Map<?,?>> doGetAllTakeOutOrder(Map<String ,String> token);
+
 }

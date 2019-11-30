@@ -2,6 +2,7 @@ package com.example.syfserver.dao;
 
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
+import com.example.syfserver.entity.TakeOutOrderEntity;
 import com.example.syfserver.entity.VxUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,8 @@ public interface GoodsDao {
     void doSaveVxAddress(@Param("address") String address,@Param("openId") String openId);
 
     List<?> doSelectVxAddress(@Param("id")String vxId);
+
+    void  doGetTakeOutOrder(@Param("takeOutOrderEntity") TakeOutOrderEntity takeOutOrderEntity);
+
+    List<TakeOutOrderEntity>  doGetAllTakeInOrder (@Param("openId") String openId);
 }

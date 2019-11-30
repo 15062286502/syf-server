@@ -61,4 +61,19 @@ public class VxController {
     public void deleteVxAddress(@RequestParam Map<String ,String> index){
         goodsService.doDeleteVxAddress(index);
     }
+
+    @RequestMapping("/takeOutOrder")
+    public Map<String,String> getTakeOutOrderList(@RequestParam Map<String ,String> good){
+
+        return goodsService.doGetTakeOutOrder(good);
+    }
+
+    @RequestMapping("/getAllTakeOutOrder")
+    public List<Map<?, ?>> getAllTakeOutOrder(@RequestParam Map<String ,String> token){
+
+        return goodsService.doGetAllTakeOutOrder(token);
+    }
+
+
+
 }

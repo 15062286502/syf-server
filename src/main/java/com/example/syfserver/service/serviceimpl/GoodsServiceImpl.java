@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.syfserver.dao.GoodsDao;
-import com.example.syfserver.entity.GoodsEntity;
-import com.example.syfserver.entity.OrderEntity;
-import com.example.syfserver.entity.VxUserEntity;
+import com.example.syfserver.entity.*;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.tools.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,26 +51,12 @@ public class GoodsServiceImpl implements GoodsService {
         Map<String, String> orderDetail = new HashMap<>();
         OrderEntity orderEntity = new OrderEntity();
 
-        StringBuffer sb = new StringBuffer();
-        sb.append("syf");
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-        sb.append(dateFormat.format(date));
-
-        orderEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-        orderEntity.setIdentifier(sb.toString());
-        orderEntity.setCreateTime(date);
         orderEntity.setMealNumber(Encrypter.genRandomNum());
-        orderEntity.setState("0");
 
-        orderEntity.setCupNumber(good.get("cupNumber"));
         orderEntity.setCutMoney(good.get("cutMoney"));
-        orderEntity.setRemarks(good.get("remarks"));
-        orderEntity.setSumMoney(good.get("sumMoney"));
-        orderEntity.setOrderDesc(good.get("cartList"));
-        orderEntity.setOpenId(good.get("openId"));
 
-        goodsDao.doGetOrder(orderEntity);
+
+        goodsDao.doGetOrder((OrderEntity)setOrderEntity(orderEntity,good));
         orderDetail.put("identifier", orderEntity.getIdentifier());
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         orderDetail.put("time", dateFormat1.format(orderEntity.getCreateTime()));
@@ -86,15 +70,8 @@ public class GoodsServiceImpl implements GoodsService {
         List<OrderEntity> orderList = goodsDao.doGetTakeInOrder(token.get("openId"));
         for (OrderEntity orderEntity :
                 orderList) {
-            Map<String, Object> orderMap = new HashMap<>();
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            orderMap.put("orderEntity", orderEntity);
-            JSONArray orderJsonArray = JSONArray.parseArray(orderEntity.getOrderDesc());
-            orderMap.put("orderName", (orderJsonArray.getJSONObject(0)).get("name"));
-            orderMap.put("orderImg", (orderJsonArray.getJSONObject(0)).get("img"));
-            orderMap.put("orderTime", sd.format(orderEntity.getCreateTime()));
-            orderMap.put("orderDesc", (orderJsonArray.getJSONObject(0)).get("detail"));
-            realOrderList.add(orderMap);
+
+            realOrderList.add(setAllOrderList(orderEntity));
         }
         return realOrderList;
     }
@@ -167,5 +144,66 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public Map<String, String> doGetTakeOutOrder(Map<String, String> good) {
+        Map<String, String> orderDetail = new HashMap<>();
+        TakeOutOrderEntity takeOutOrderEntity = new TakeOutOrderEntity();
+        takeOutOrderEntity.setAddress(good.get("address"));
+        goodsDao.doGetTakeOutOrder((TakeOutOrderEntity)setOrderEntity(takeOutOrderEntity,good));
+        orderDetail.put("identifier", takeOutOrderEntity.getIdentifier());
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        orderDetail.put("time", dateFormat1.format(takeOutOrderEntity.getCreateTime()));
+        orderDetail.put("deliveryPerson",takeOutOrderEntity.getDeliveryPerson());
+        return orderDetail;
+
+    }
+
+    @Override
+    public List<Map<?, ?>> doGetAllTakeOutOrder(Map<String, String> token) {
+        List<Map<?, ?>> realOrderList = new ArrayList<>();
+        List<TakeOutOrderEntity> orderList = goodsDao.doGetAllTakeInOrder(token.get("openId"));
+        for (TakeOutOrderEntity orderEntity :
+                orderList) {
+            realOrderList.add(setAllOrderList(orderEntity));
+        }
+        return realOrderList;
+    }
+
+    private  static ParentOrderEntity setOrderEntity(ParentOrderEntity parentOrderEntity,Map<String, String> good){
+         StringBuffer sb = new StringBuffer();
+         if (parentOrderEntity instanceof OrderEntity){
+             sb.append("syf_0");
+         }else {
+             sb.append("syf_1");
+
+         }
+         Date date = new Date();
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+         sb.append(dateFormat.format(date));
+
+         parentOrderEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+         parentOrderEntity.setIdentifier(sb.toString());
+         parentOrderEntity.setCreateTime(date);
+        parentOrderEntity.setState("0");
+
+         parentOrderEntity.setCupNumber(good.get("cupNumber"));
+         parentOrderEntity.setRemarks(good.get("remarks"));
+         parentOrderEntity.setSumMoney(good.get("sumMoney"));
+         parentOrderEntity.setOrderDesc(good.get("cartList"));
+         parentOrderEntity.setOpenId(good.get("openId"));
+        return  parentOrderEntity;
+     }
+
+    private  Map<?, ?> setAllOrderList(ParentOrderEntity parentOrderEntity){
+            Map<String, Object> orderMap = new HashMap<>();
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            orderMap.put("orderEntity", parentOrderEntity);
+            JSONArray orderJsonArray = JSONArray.parseArray(parentOrderEntity.getOrderDesc());
+            orderMap.put("orderName", (orderJsonArray.getJSONObject(0)).get("name"));
+            orderMap.put("orderImg", (orderJsonArray.getJSONObject(0)).get("img"));
+            orderMap.put("orderTime", sd.format(parentOrderEntity.getCreateTime()));
+            orderMap.put("orderDesc", (orderJsonArray.getJSONObject(0)).get("detail"));
+        return orderMap;
+    }
 
 }
