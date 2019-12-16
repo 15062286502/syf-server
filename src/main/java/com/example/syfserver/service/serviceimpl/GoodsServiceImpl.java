@@ -56,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
         orderEntity.setCutMoney(good.get("cutMoney"));
 
 
-        goodsDao.doGetOrder((OrderEntity)setOrderEntity(orderEntity,good));
+        goodsDao.doGetOrder((OrderEntity) setOrderEntity(orderEntity, good));
         orderDetail.put("identifier", orderEntity.getIdentifier());
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         orderDetail.put("time", dateFormat1.format(orderEntity.getCreateTime()));
@@ -149,11 +149,11 @@ public class GoodsServiceImpl implements GoodsService {
         Map<String, String> orderDetail = new HashMap<>();
         TakeOutOrderEntity takeOutOrderEntity = new TakeOutOrderEntity();
         takeOutOrderEntity.setAddress(good.get("address"));
-        goodsDao.doGetTakeOutOrder((TakeOutOrderEntity)setOrderEntity(takeOutOrderEntity,good));
+        goodsDao.doGetTakeOutOrder((TakeOutOrderEntity) setOrderEntity(takeOutOrderEntity, good));
         orderDetail.put("identifier", takeOutOrderEntity.getIdentifier());
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         orderDetail.put("time", dateFormat1.format(takeOutOrderEntity.getCreateTime()));
-        orderDetail.put("deliveryPerson",takeOutOrderEntity.getDeliveryPerson());
+        orderDetail.put("deliveryPerson", takeOutOrderEntity.getDeliveryPerson());
         return orderDetail;
 
     }
@@ -169,41 +169,49 @@ public class GoodsServiceImpl implements GoodsService {
         return realOrderList;
     }
 
-    private  static ParentOrderEntity setOrderEntity(ParentOrderEntity parentOrderEntity,Map<String, String> good){
-         StringBuffer sb = new StringBuffer();
-         if (parentOrderEntity instanceof OrderEntity){
-             sb.append("syf_0");
-         }else {
-             sb.append("syf_1");
 
-         }
-         Date date = new Date();
-         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-         sb.append(dateFormat.format(date));
+    private static ParentOrderEntity setOrderEntity(ParentOrderEntity parentOrderEntity, Map<String, String> good) {
+        StringBuffer sb = new StringBuffer();
+        if (parentOrderEntity instanceof OrderEntity) {
+            sb.append("syf_0");
+        } else {
+            sb.append("syf_1");
 
-         parentOrderEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-         parentOrderEntity.setIdentifier(sb.toString());
-         parentOrderEntity.setCreateTime(date);
+        }
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        sb.append(dateFormat.format(date));
+
+        parentOrderEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+        parentOrderEntity.setIdentifier(sb.toString());
+        parentOrderEntity.setCreateTime(date);
         parentOrderEntity.setState("0");
 
-         parentOrderEntity.setCupNumber(good.get("cupNumber"));
-         parentOrderEntity.setRemarks(good.get("remarks"));
-         parentOrderEntity.setSumMoney(good.get("sumMoney"));
-         parentOrderEntity.setOrderDesc(good.get("cartList"));
-         parentOrderEntity.setOpenId(good.get("openId"));
-        return  parentOrderEntity;
-     }
+        parentOrderEntity.setCupNumber(good.get("cupNumber"));
+        parentOrderEntity.setRemarks(good.get("remarks"));
+        parentOrderEntity.setSumMoney(good.get("sumMoney"));
+        parentOrderEntity.setOrderDesc(good.get("cartList"));
+        parentOrderEntity.setOpenId(good.get("openId"));
+        return parentOrderEntity;
+    }
 
-    private  Map<?, ?> setAllOrderList(ParentOrderEntity parentOrderEntity){
-            Map<String, Object> orderMap = new HashMap<>();
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            orderMap.put("orderEntity", parentOrderEntity);
-            JSONArray orderJsonArray = JSONArray.parseArray(parentOrderEntity.getOrderDesc());
-            orderMap.put("orderName", (orderJsonArray.getJSONObject(0)).get("name"));
-            orderMap.put("orderImg", (orderJsonArray.getJSONObject(0)).get("img"));
-            orderMap.put("orderTime", sd.format(parentOrderEntity.getCreateTime()));
-            orderMap.put("orderDesc", (orderJsonArray.getJSONObject(0)).get("detail"));
+    private Map<?, ?> setAllOrderList(ParentOrderEntity parentOrderEntity) {
+        Map<String, Object> orderMap = new HashMap<>();
+        SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        orderMap.put("orderEntity", parentOrderEntity);
+        JSONArray orderJsonArray = JSONArray.parseArray(parentOrderEntity.getOrderDesc());
+        orderMap.put("orderName", (orderJsonArray.getJSONObject(0)).get("name"));
+        orderMap.put("orderImg", (orderJsonArray.getJSONObject(0)).get("img"));
+        orderMap.put("orderTime", sd.format(parentOrderEntity.getCreateTime()));
+        orderMap.put("orderDesc", (orderJsonArray.getJSONObject(0)).get("detail"));
         return orderMap;
     }
 
+    @Override
+    public void doUpdateRemark(Map<String, Object> remarks) {
+
+        String orderId = (String) remarks.get("orderId");
+        JSONObject remark = new JSONObject(remarks);
+        goodsDao.doUpdateRemark(orderId,remark.toString());
+    }
 }

@@ -25,4 +25,6 @@ public interface GoodsService {
 
     List<Map<?,?>> doGetAllTakeOutOrder(Map<String ,String> token);
 
+    void doUpdateRemark(Map<String,Object> index);
+
 }

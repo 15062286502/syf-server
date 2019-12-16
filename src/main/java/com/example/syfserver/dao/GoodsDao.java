@@ -1,5 +1,6 @@
 package com.example.syfserver.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.OrderEntity;
 import com.example.syfserver.entity.TakeOutOrderEntity;
@@ -31,4 +32,6 @@ public interface GoodsDao {
     void  doGetTakeOutOrder(@Param("takeOutOrderEntity") TakeOutOrderEntity takeOutOrderEntity);
 
     List<TakeOutOrderEntity>  doGetAllTakeInOrder (@Param("openId") String openId);
+
+    void doUpdateRemark(@Param("orderId")String orderId, @Param("remark")String remark);
 }

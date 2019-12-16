@@ -40,4 +40,9 @@
     <select id="doGetAllTakeInOrder"  parameterType="String" resultType="com.example.syfserver.entity.TakeOutOrderEntity">
         SELECT  *   FROM take_out_order where openId = #{openId} order by createTime desc
     </select>
+
+
+    <update id="doUpdateRemark" parameterType="String" >
+        update take_out_order set evaluate = #{remark} where id = #{orderId}
+    </update>
 </mapper>
