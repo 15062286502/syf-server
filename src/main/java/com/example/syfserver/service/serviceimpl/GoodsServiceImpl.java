@@ -7,6 +7,7 @@ import com.example.syfserver.dao.GoodsDao;
 import com.example.syfserver.entity.*;
 import com.example.syfserver.service.GoodsService;
 import com.example.syfserver.tools.Encrypter;
+import com.example.syfserver.tools.EntityFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Map<String, String> doGetOrder(Map<String, String> good) {
         Map<String, String> orderDetail = new HashMap<>();
-        OrderEntity orderEntity = new OrderEntity();
+        OrderEntity orderEntity = (OrderEntity) EntityFactory.getInstance().getEntity("IN");
 
         orderEntity.setMealNumber(Encrypter.genRandomNum());
 
@@ -147,7 +148,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Map<String, String> doGetTakeOutOrder(Map<String, String> good) {
         Map<String, String> orderDetail = new HashMap<>();
-        TakeOutOrderEntity takeOutOrderEntity = new TakeOutOrderEntity();
+        TakeOutOrderEntity takeOutOrderEntity = (TakeOutOrderEntity)EntityFactory.getInstance().getEntity("OUT");
         takeOutOrderEntity.setAddress(good.get("address"));
         goodsDao.doGetTakeOutOrder((TakeOutOrderEntity) setOrderEntity(takeOutOrderEntity, good));
         orderDetail.put("identifier", takeOutOrderEntity.getIdentifier());
