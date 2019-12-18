@@ -1,16 +1,23 @@
 package com.example.syfserver.controller;
 
+import com.example.syfserver.entity.DtoEntity;
 import com.example.syfserver.entity.PageResultEntity;
 import com.example.syfserver.entity.UserEntity;
+import com.example.syfserver.service.TokenService;
 import com.example.syfserver.service.UserService;
+import com.example.syfserver.tools.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
 import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
@@ -21,19 +28,36 @@ import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private TokenService tokenService;
+    @Resource
+    private RedisService redisService;
+    @Resource
+    private ValueOperations<String,Object> valueOperations;
 
     @RequestMapping("/login")
-    public UserEntity userLogin(@RequestBody UserEntity loginUser) {
+    public DtoEntity userLogin(@RequestBody UserEntity loginUser, HttpServletRequest request) {
         String name = loginUser.getName();
         String password = getMD5(loginUser.getPassword());
+        DtoEntity dto = new DtoEntity();
         UserEntity user = userService.login(name);
         if (user.getPassword() != null && user.getPassword().equals(password)) {
             user.setPassword("");
-            return user;
-        } else {
-            return null;
-        }
 
+            String userAgent = request.getHeader("user-agent");
+            String token = this.tokenService.generateToken(userAgent, user.getName());
+
+            valueOperations.set(token,user.toString());
+            redisService.expireKey(token,120, TimeUnit.SECONDS);
+            dto.setIsLogin("true");
+            dto.setToken(token);
+            dto.setTokenCreatedTime(System.currentTimeMillis());
+            dto.setTokenExpiryTime(System.currentTimeMillis() + 120);
+            dto.setReturnObj(user);
+        } else {
+            dto.setIsLogin("false");
+        }
+        return dto;
     }
 
     @RequestMapping("/usermanage")
