@@ -48,7 +48,7 @@ public class UserController {
             String token = this.tokenService.generateToken(userAgent, user.getName());
 
             valueOperations.set(token,user.toString());
-            redisService.expireKey(token,120, TimeUnit.SECONDS);
+            redisService.expireKey(token,10, TimeUnit.SECONDS);
             dto.setIsLogin("true");
             dto.setToken(token);
             dto.setTokenCreatedTime(System.currentTimeMillis());

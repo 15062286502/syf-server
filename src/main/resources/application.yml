@@ -1,7 +1,6 @@
 server:
   port: 8081
-  servlet:
-    context-path: /security‐springboot
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -21,8 +20,7 @@ spring:
       #超时时间
       timeout: 5000ms
       #其他配置
-  application:
-    name: security‐springboot
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.example.syfserver.entity
