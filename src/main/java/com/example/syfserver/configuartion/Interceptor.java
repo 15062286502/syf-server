@@ -32,7 +32,6 @@ public class Interceptor implements HandlerInterceptor {
                 json.put("code","50000");
                 response.getWriter().append(json.toJSONString());
             }catch (Exception e){
-                e.printStackTrace();
                 response.sendError(500);
                 return false;
             }
