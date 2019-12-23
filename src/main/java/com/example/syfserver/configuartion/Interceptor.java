@@ -9,13 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component
 public class Interceptor implements HandlerInterceptor {
     @Resource
     private ValueOperations<String,Object> valueOperations;
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String token = request.getHeader("Authorization").toString();
         if (valueOperations.get(token)==null){
             String origin = request.getHeader("Origin");
@@ -26,15 +27,13 @@ public class Interceptor implements HandlerInterceptor {
             response.setHeader("Access-Control-Allow-Credentials", "true");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
-            try{
+
                 JSONObject json = new JSONObject();
                 json.put("msg","登录过期");
                 json.put("code","50000");
                 response.getWriter().append(json.toJSONString());
-            }catch (Exception e){
-                response.sendError(500);
+
                 return false;
-            }
         }
         return true;
     }
