@@ -4,10 +4,10 @@ public class DtoEntity {
     private String token;
 
     //token创建时间
-    private Long tokenCreatedTime;
+    private String tokenCreatedTime;
 
     //失效时间
-    private Long tokenExpiryTime;
+    private String tokenExpiryTime;
 
     private String isLogin;
 
@@ -29,19 +29,19 @@ public class DtoEntity {
         this.token = token;
     }
 
-    public Long getTokenCreatedTime() {
+    public String getTokenCreatedTime() {
         return tokenCreatedTime;
     }
 
-    public void setTokenCreatedTime(Long tokenCreatedTime) {
+    public void setTokenCreatedTime(String tokenCreatedTime) {
         this.tokenCreatedTime = tokenCreatedTime;
     }
 
-    public Long getTokenExpiryTime() {
+    public String getTokenExpiryTime() {
         return tokenExpiryTime;
     }
 
-    public void setTokenExpiryTime(Long tokenExpiryTime) {
+    public void setTokenExpiryTime(String tokenExpiryTime) {
         this.tokenExpiryTime = tokenExpiryTime;
     }
 

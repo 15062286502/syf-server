@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
@@ -48,11 +50,20 @@ public class UserController {
             String token = this.tokenService.generateToken(userAgent, user.getName());
 
             valueOperations.set(token,user.toString());
-            redisService.expireKey(token,10, TimeUnit.SECONDS);
+            redisService.expireKey(token,1800, TimeUnit.SECONDS);
+            String lastTime = (String)valueOperations.get("lastLoginTime");
+            String lastExpiryTime = (String)valueOperations.get("lastExpiryLoginTime");
+
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime lastLoginTime = LocalDateTime.now();
+            LocalDateTime expiryDateTime = lastLoginTime.plusSeconds(10);
+            valueOperations.set("lastLoginTime",lastLoginTime.format(df));
+            valueOperations.set("lastExpiryLoginTime",expiryDateTime.format(df));
+
             dto.setIsLogin("true");
             dto.setToken(token);
-            dto.setTokenCreatedTime(System.currentTimeMillis());
-            dto.setTokenExpiryTime(System.currentTimeMillis() + 120);
+            dto.setTokenCreatedTime(lastTime);
+            dto.setTokenExpiryTime(lastExpiryTime);
             dto.setReturnObj(user);
         } else {
             dto.setIsLogin("false");

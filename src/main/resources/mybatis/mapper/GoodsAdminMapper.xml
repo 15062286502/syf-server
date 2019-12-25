@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.syfserver.dao.GoodsAdminDao">
+    <select id="allGoodsList"  resultType="int">
+        select count(*) from goods
+    </select>
+    <select id="goodsPageContext"  resultType="com.example.syfserver.entity.GoodsEntity">
+        select * from goods limit #{start},#{pageSize}
+    </select>
+    <select id="queryGoodNameCount"  resultType="int">
+        select count(*) from goods where name like CONCAT(CONCAT('%', #{queryName}), '%')
+    </select>
+    <select id="queryGoodNameResult"  resultType="com.example.syfserver.entity.GoodsEntity">
+        SELECT * FROM (SELECT * FROM goods where name like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
+    </select>
+</mapper>
