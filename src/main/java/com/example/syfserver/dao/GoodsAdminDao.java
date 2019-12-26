@@ -16,4 +16,6 @@ public interface GoodsAdminDao {
     int queryGoodNameCount(String queryName);
 
     List<GoodsEntity> queryGoodNameResult(String queryName,int start, int pageSize);
+
+    void doDeleteGood(String goodId);
 }

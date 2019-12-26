@@ -13,4 +13,7 @@
     <select id="queryGoodNameResult"  resultType="com.example.syfserver.entity.GoodsEntity">
         SELECT * FROM (SELECT * FROM goods where name like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
     </select>
+    <delete id="doDeleteGood" parameterType="String">
+        delete from  goods where id = #{goodId}
+    </delete>
 </mapper>
