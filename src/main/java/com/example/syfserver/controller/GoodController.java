@@ -42,9 +42,19 @@ public class GoodController {
     }
 
     @RequestMapping("/uploadGoodImg")
-    public void imgUpload(HttpServletRequest req, MultipartHttpServletRequest multiReq)
+    public String imgUpload(HttpServletRequest request, MultipartHttpServletRequest multiReq)
             throws IOException {
+        String fileName = request.getParameter("name");
         MultipartFile multipartFile = multiReq.getFile("file");
         File file = MultipartFileToFile(multipartFile);
+        return goodsAdminService.getGoodImgUrl(file, fileName);
+    }
+
+    @RequestMapping("/goodAdd")
+    public DtoEntity goodAdd(@RequestBody GoodsEntity goodsEntity) {
+        DtoEntity dtoEntity =new DtoEntity();
+        goodsAdminService.doAddGood(goodsEntity);
+        dtoEntity.setIsLogin("true");
+        return dtoEntity;
     }
 }

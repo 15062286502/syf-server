@@ -16,4 +16,7 @@
     <delete id="doDeleteGood" parameterType="String">
         delete from  goods where id = #{goodId}
     </delete>
+    <insert id="doAddGood" parameterType="com.example.syfserver.entity.GoodsEntity">
+        insert into goods (id,name,price,kind,imgUrl,goodDesc)values (#{goodsEntity.id},#{goodsEntity.name},#{goodsEntity.price},#{goodsEntity.kind},#{goodsEntity.imgUrl},#{goodsEntity.goodDesc})
+    </insert>
 </mapper>

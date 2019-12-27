@@ -4,7 +4,7 @@ public class GoodsEntity {
     private String id;
     private String name;
     private String price;
-    private String desc;
+    private String goodDesc;
     private String imgUrl;
     private String kind;
 
@@ -32,12 +32,12 @@ public class GoodsEntity {
         this.price = price;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getGoodDesc() {
+        return goodDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setGoodDesc(String desc) {
+        this.goodDesc = desc;
     }
 
     public String getImgUrl() {

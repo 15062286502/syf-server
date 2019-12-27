@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.syfserver.tools.RemovePassword.removePassword;
-import static com.example.syfserver.tools.Resource.USER_IMAGE_ADDRESS;
-import static com.example.syfserver.tools.Resource.USER_IMAGE_URL;
+import static com.example.syfserver.constant.Resource.USER_IMAGE_ADDRESS;
+import static com.example.syfserver.constant.Resource.USER_IMAGE_URL;
 
 @Service
 public class UserServiceImpl implements UserService {

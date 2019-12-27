@@ -13,5 +13,7 @@ public interface GoodsAdminService {
 
     DtoEntity deleteGoods(List<GoodsEntity> goodsList);
 
-    String getGoodImgUrl(File file);
+    String getGoodImgUrl(File file, String fileName);
+
+    void doAddGood(GoodsEntity goodsEntity);
 }

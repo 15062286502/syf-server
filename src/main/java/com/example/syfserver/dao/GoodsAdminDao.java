@@ -2,6 +2,7 @@ package com.example.syfserver.dao;
 
 import com.example.syfserver.entity.GoodsEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface GoodsAdminDao {
     List<GoodsEntity> queryGoodNameResult(String queryName,int start, int pageSize);
 
     void doDeleteGood(String goodId);
+
+    void doAddGood(@Param("goodsEntity") GoodsEntity goodsEntity);
 }
