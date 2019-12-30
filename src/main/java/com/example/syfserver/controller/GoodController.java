@@ -4,7 +4,6 @@ import com.example.syfserver.entity.DtoEntity;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.PageResultEntity;
 import com.example.syfserver.service.GoodsAdminService;
-import com.example.syfserver.service.UserService;
 import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;

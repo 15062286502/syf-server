@@ -35,7 +35,6 @@ public class GoodsAdminServiceImpl implements GoodsAdminService {
 
     @Override
     public List<?> queryGoodsPageContext(int start, int pageSize, String queryName) {
-        List<GoodsEntity> security;
         if (queryName.equals("") || queryName == null) {
 
             return goodsAdminDao.goodsPageContext(start, pageSize);
