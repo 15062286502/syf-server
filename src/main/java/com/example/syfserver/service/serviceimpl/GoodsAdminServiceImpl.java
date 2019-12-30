@@ -4,6 +4,7 @@ import com.example.syfserver.dao.GoodsAdminDao;
 import com.example.syfserver.entity.DtoEntity;
 import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.service.GoodsAdminService;
+import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +48,7 @@ public class GoodsAdminServiceImpl implements GoodsAdminService {
     public DtoEntity deleteGoods(List<GoodsEntity> goodsList) {
         DtoEntity dto = new DtoEntity();
         Iterator<GoodsEntity> iterator = goodsList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             goodsAdminDao.doDeleteGood(iterator.next().getId());
         }
         dto.setIsLogin("true");
@@ -93,7 +94,21 @@ public class GoodsAdminServiceImpl implements GoodsAdminService {
 
     @Override
     public void doAddGood(GoodsEntity goodsEntity) {
-        goodsEntity.setId(UUID.randomUUID().toString().replaceAll("-",""));
+        goodsEntity.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         goodsAdminDao.doAddGood(goodsEntity);
+    }
+
+    @Override
+    public void doUpdateGood(GoodsEntity goodsEntity) {
+        goodsAdminDao.doUpdateGood(goodsEntity);
+    }
+
+    @Override
+    public List<?> getGoodByName(String goodName, String goodId) {
+        if (StringUtil.isEmpty(goodId)) {
+            goodId = "";
+        }
+        return goodsAdminDao.doGetGoodByNameAndId(goodName, goodId);
+
     }
 }

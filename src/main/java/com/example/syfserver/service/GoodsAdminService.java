@@ -16,4 +16,8 @@ public interface GoodsAdminService {
     String getGoodImgUrl(File file, String fileName);
 
     void doAddGood(GoodsEntity goodsEntity);
+
+    void doUpdateGood(GoodsEntity goodsEntity);
+
+    List<?> getGoodByName(String goodName,String goodId);
 }

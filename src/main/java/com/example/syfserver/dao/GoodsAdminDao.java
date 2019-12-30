@@ -21,4 +21,8 @@ public interface GoodsAdminDao {
     void doDeleteGood(String goodId);
 
     void doAddGood(@Param("goodsEntity") GoodsEntity goodsEntity);
+
+    void doUpdateGood(@Param("goodsEntity") GoodsEntity goodsEntity);
+
+    List<GoodsEntity> doGetGoodByNameAndId (@Param("goodName") String goodName,@Param("goodId") String goodId);
 }

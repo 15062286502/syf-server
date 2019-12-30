@@ -5,6 +5,7 @@ import com.example.syfserver.entity.GoodsEntity;
 import com.example.syfserver.entity.PageResultEntity;
 import com.example.syfserver.service.GoodsAdminService;
 import com.example.syfserver.service.UserService;
+import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,11 @@ import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
 public class GoodController {
     @Autowired
     private GoodsAdminService goodsAdminService;
+
     @RequestMapping("/goodsManage")
-    public DtoEntity getGoodsList(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestParam("loginName") String queryName){
+    public DtoEntity getGoodsList(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize, @RequestParam("loginName") String queryName) {
         DtoEntity dto = new DtoEntity();
-        PageResultEntity pgResult =new PageResultEntity();
+        PageResultEntity pgResult = new PageResultEntity();
         pgResult.setTotal(goodsAdminService.queryAllGoods(queryName));
         pgResult.setData(goodsAdminService.queryGoodsPageContext(page * pageSize, pageSize, queryName));
         dto.setReturnObj(pgResult);
@@ -38,7 +40,7 @@ public class GoodController {
 
     @RequestMapping("/goodsDelete")
     public DtoEntity userDelete(@RequestBody List<GoodsEntity> goodsList) {
-            return goodsAdminService.deleteGoods(goodsList);
+        return goodsAdminService.deleteGoods(goodsList);
     }
 
     @RequestMapping("/uploadGoodImg")
@@ -52,9 +54,22 @@ public class GoodController {
 
     @RequestMapping("/goodAdd")
     public DtoEntity goodAdd(@RequestBody GoodsEntity goodsEntity) {
-        DtoEntity dtoEntity =new DtoEntity();
-        goodsAdminService.doAddGood(goodsEntity);
-        dtoEntity.setIsLogin("true");
+        DtoEntity dtoEntity = new DtoEntity();
+        List<?> goodByName = goodsAdminService.getGoodByName(goodsEntity.getName(), goodsEntity.getId());
+        if (goodByName != null && !goodByName.isEmpty()) {
+            dtoEntity.setIsLogin("false");
+            dtoEntity.setReturnObj("商品已经存在！");
+        } else {
+            dtoEntity.setIsLogin("true");
+            if (StringUtil.isEmpty(goodsEntity.getId())) {
+                goodsAdminService.doAddGood(goodsEntity);
+                dtoEntity.setReturnObj("add");
+            } else {
+                goodsAdminService.doUpdateGood(goodsEntity);
+                dtoEntity.setReturnObj("update");
+            }
+        }
+
         return dtoEntity;
     }
 }

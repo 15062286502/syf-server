@@ -19,4 +19,10 @@
     <insert id="doAddGood" parameterType="com.example.syfserver.entity.GoodsEntity">
         insert into goods (id,name,price,kind,imgUrl,goodDesc)values (#{goodsEntity.id},#{goodsEntity.name},#{goodsEntity.price},#{goodsEntity.kind},#{goodsEntity.imgUrl},#{goodsEntity.goodDesc})
     </insert>
+    <update id="doUpdateGood" parameterType="com.example.syfserver.entity.GoodsEntity">
+        update goods set name=#{goodsEntity.name},price=#{goodsEntity.price},kind=#{goodsEntity.kind},imgUrl=#{goodsEntity.imgUrl},goodDesc=#{goodsEntity.goodDesc} where id=#{goodsEntity.id}
+    </update>
+    <select id="doGetGoodByNameAndId" parameterType="String" resultType="com.example.syfserver.entity.GoodsEntity">
+        select * from goods where name=#{goodName} and id <![CDATA[ <> ]]>  #{goodId}
+    </select>
 </mapper>
