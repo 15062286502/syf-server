@@ -13,4 +13,7 @@
     <select id="queryTakeInResult"  resultType="com.example.syfserver.entity.OrderEntity">
         SELECT * FROM (SELECT * FROM take_in_order where identifier like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
     </select>
+    <delete id="doDeleteTakeIn" parameterType="String">
+        delete from take_in_order where id = #{takeInId}
+    </delete>
 </mapper>

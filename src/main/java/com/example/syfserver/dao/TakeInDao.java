@@ -16,4 +16,6 @@ public interface TakeInDao {
     int queryTakeInNameCount(String queryName);
 
     List<OrderEntity> queryTakeInResult(String queryName, int start, int pageSize);
+
+    void doDeleteTakeIn(String takeInId);
 }

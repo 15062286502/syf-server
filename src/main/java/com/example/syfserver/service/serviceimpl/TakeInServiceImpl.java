@@ -3,6 +3,7 @@ package com.example.syfserver.service.serviceimpl;
 import com.example.syfserver.dao.TakeInDao;
 import com.example.syfserver.entity.OrderEntity;
 import com.example.syfserver.service.TakeInService;
+import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class TakeInServiceImpl implements TakeInService {
         List<Map<String,Object>> finalList = new ArrayList<>();
         List<OrderEntity> takeInList = new ArrayList<>();
 
-        if (queryName.equals("") || queryName == null) {
+        if (StringUtil.isEmpty(queryName)) {
 
             takeInList =  takeInDao.takeInPageContext(start, pageSize);
         } else {
@@ -45,5 +46,12 @@ public class TakeInServiceImpl implements TakeInService {
             finalList.add(timeMap);
         }
         return finalList;
+    }
+
+    @Override
+    public void deleteTakeIn(List<Map<String,Object>> orderEntities) {
+        for (Map<String,Object> takeInMap : orderEntities){
+            takeInDao.doDeleteTakeIn(((LinkedHashMap<String,Object>)takeInMap.get("takeIn")).get("id").toString());
+        }
     }
 }

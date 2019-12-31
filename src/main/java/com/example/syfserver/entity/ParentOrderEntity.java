@@ -1,17 +1,26 @@
 package com.example.syfserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ParentOrderEntity {
     private String id;
     private String identifier;
+
+    @JsonFormat(
+            pattern = "yyyy-MM-dd HH:mm:ss",
+            timezone = "GMT+8"
+    )
     private Date createTime;
+
     private String state;
     private String orderDesc;
     private String remarks;
     private String sumMoney;
     private String cupNumber;
     private String openId;
+
 
     public Date getCreateTime() {
         return createTime;
