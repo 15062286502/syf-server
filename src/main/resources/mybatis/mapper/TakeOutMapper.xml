@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.syfserver.dao.TakeOutDao">
+    <select id="allTakeOutList"  resultType="int">
+        select count(*) from take_out_order
+    </select>
+    <select id="takeOutPageContext"  resultType="com.example.syfserver.entity.TakeOutOrderEntity">
+        select * from take_out_order order by createTime desc limit #{start},#{pageSize}
+    </select>
+    <select id="queryTakeOutNameCount"  resultType="int">
+        select count(*) from take_out_order where identifier like CONCAT(CONCAT('%', #{queryName}), '%')
+    </select>
+    <select id="queryTakeOutResult"  resultType="com.example.syfserver.entity.TakeOutOrderEntity">
+        SELECT * FROM (SELECT * FROM take_out_order where identifier like CONCAT(CONCAT('%', #{queryName}), '%')) as a limit #{start},#{pageSize}
+    </select>
+    <delete id="doDeleteTakeOut" parameterType="String">
+        delete from take_out_order where id = #{takeOutId}
+    </delete>
+    <update id="doCompleteTakeOut" parameterType="String">
+        update take_out_order set state = '1' where id = #{takeOutId}
+    </update>
+</mapper>

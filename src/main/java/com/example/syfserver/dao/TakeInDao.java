@@ -18,4 +18,6 @@ public interface TakeInDao {
     List<OrderEntity> queryTakeInResult(String queryName, int start, int pageSize);
 
     void doDeleteTakeIn(String takeInId);
+
+    void doCompleteTakeIn(String takeInId);
 }

@@ -7,7 +7,6 @@ import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -42,6 +41,13 @@ public class TakeInServiceImpl implements TakeInService {
     public void deleteTakeIn(List<OrderEntity> orderEntities) {
         for (OrderEntity takeInMap : orderEntities){
             takeInDao.doDeleteTakeIn(takeInMap.getId());
+        }
+    }
+
+    @Override
+    public void completeTakeIn(List<OrderEntity> orderEntities) {
+        for (OrderEntity takeInMap : orderEntities){
+            takeInDao.doCompleteTakeIn(takeInMap.getId());
         }
     }
 }

@@ -16,4 +16,7 @@
     <delete id="doDeleteTakeIn" parameterType="String">
         delete from take_in_order where id = #{takeInId}
     </delete>
+    <update id="doCompleteTakeIn" parameterType="String">
+        update take_in_order set state = '1' where id = #{takeInId}
+    </update>
 </mapper>
