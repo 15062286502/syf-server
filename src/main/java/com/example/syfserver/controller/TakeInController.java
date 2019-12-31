@@ -30,7 +30,7 @@ public class TakeInController {
     }
 
     @RequestMapping("/takeInDelete")
-    public DtoEntity userDelete(@RequestBody List<Map<String,Object>> orderEntitiy) {
+    public DtoEntity userDelete(@RequestBody List<OrderEntity> orderEntitiy) {
         DtoEntity dto = new DtoEntity();
         takeInService.deleteTakeIn(orderEntitiy);
         dto.setIsLogin("true");

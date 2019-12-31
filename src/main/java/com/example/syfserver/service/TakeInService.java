@@ -10,5 +10,5 @@ public interface TakeInService {
 
     List<?> queryTakeInOrderPageContext(int start, int pageSize, String queryName);
 
-    void deleteTakeIn(List<Map<String,Object>> orderEntities);
+    void deleteTakeIn(List<OrderEntity> orderEntities);
 }

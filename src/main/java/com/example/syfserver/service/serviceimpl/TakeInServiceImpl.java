@@ -28,30 +28,20 @@ public class TakeInServiceImpl implements TakeInService {
 
     @Override
     public List<?> queryTakeInOrderPageContext(int start, int pageSize, String queryName) {
-        List<Map<String,Object>> finalList = new ArrayList<>();
-        List<OrderEntity> takeInList = new ArrayList<>();
 
         if (StringUtil.isEmpty(queryName)) {
 
-            takeInList =  takeInDao.takeInPageContext(start, pageSize);
+            return   takeInDao.takeInPageContext(start, pageSize);
         } else {
-            takeInList =  takeInDao.queryTakeInResult(queryName, start, pageSize);
+            return   takeInDao.queryTakeInResult(queryName, start, pageSize);
         }
-        SimpleDateFormat sd= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (OrderEntity orderEntity:
-                takeInList) {
-            Map<String,Object> timeMap = new HashMap<>();
-            timeMap.put("time",sd.format(orderEntity.getCreateTime()));
-            timeMap.put("takeIn",orderEntity);
-            finalList.add(timeMap);
-        }
-        return finalList;
+
     }
 
     @Override
-    public void deleteTakeIn(List<Map<String,Object>> orderEntities) {
-        for (Map<String,Object> takeInMap : orderEntities){
-            takeInDao.doDeleteTakeIn(((LinkedHashMap<String,Object>)takeInMap.get("takeIn")).get("id").toString());
+    public void deleteTakeIn(List<OrderEntity> orderEntities) {
+        for (OrderEntity takeInMap : orderEntities){
+            takeInDao.doDeleteTakeIn(takeInMap.getId());
         }
     }
 }
