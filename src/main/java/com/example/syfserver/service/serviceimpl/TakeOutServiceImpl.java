@@ -1,14 +1,14 @@
 package com.example.syfserver.service.serviceimpl;
 
 import com.example.syfserver.dao.TakeOutDao;
-import com.example.syfserver.entity.OrderEntity;
 import com.example.syfserver.entity.TakeOutOrderEntity;
+import com.example.syfserver.entity.UserEntity;
 import com.example.syfserver.service.TakeOutService;
 import com.example.syfserver.tools.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TakeOutServiceImpl implements TakeOutService {
@@ -48,5 +48,25 @@ public class TakeOutServiceImpl implements TakeOutService {
         for (TakeOutOrderEntity takeInMap : orderEntity){
             takeOutDao.doCompleteTakeOut(takeInMap.getId());
         }
+    }
+
+    @Override
+    public List<Map<String, String>> getAllDeliveryPerson() {
+        List<Map<String, String>> finalList = new ArrayList<>();
+        List<UserEntity> userEntities = takeOutDao.doGetAllDeliveryPerson();
+        Iterator<UserEntity> iterator = userEntities.iterator();
+        while (iterator.hasNext()){
+            Map<String,String> userMap = new HashMap<>();
+            UserEntity userEntity = iterator.next();
+            userMap.put("label",userEntity.getRealName());
+            userMap.put("value",String.valueOf(userEntity.getId()));
+            finalList.add(userMap);
+        }
+        return finalList;
+    }
+
+    @Override
+    public void updateDelivery(Map<String, String> delivery) {
+        takeOutDao.doUpdateDelivery(delivery.get("outId"),delivery.get("region"));
     }
 }

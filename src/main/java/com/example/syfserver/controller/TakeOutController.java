@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/takeOut")
@@ -44,4 +45,22 @@ public class TakeOutController {
         dto.setIsLogin("true");
         return  dto;
     }
+
+
+    @RequestMapping("/getAllDelivery")
+    public DtoEntity getAllDelivery() {
+        DtoEntity dto = new DtoEntity();
+        dto.setReturnObj(takeOutService.getAllDeliveryPerson());
+        dto.setIsLogin("true");
+        return  dto;
+    }
+
+    @RequestMapping("/setDelivery")
+    public DtoEntity setDelivery(@RequestBody Map<String,String> deliveryMap) {
+        DtoEntity dto = new DtoEntity();
+        takeOutService.updateDelivery(deliveryMap);
+        dto.setIsLogin("true");
+        return  dto;
+    }
+
 }

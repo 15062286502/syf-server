@@ -19,4 +19,10 @@
     <update id="doCompleteTakeOut" parameterType="String">
         update take_out_order set state = '1' where id = #{takeOutId}
     </update>
+    <select id="doGetAllDeliveryPerson" resultType="com.example.syfserver.entity.UserEntity">
+        select id,realName from user where role = '骑手'
+    </select>
+    <update id="doUpdateDelivery" parameterType="String">
+        update take_out_order set deliveryPerson = (select realName from user where id= #{delivery}) where id= #{outId}
+    </update>
 </mapper>
