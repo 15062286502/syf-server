@@ -30,4 +30,6 @@ public interface UserDao {
     void editUser(@Param("editUserEntity")UserEntity editUserEntity);
 
     void uploadImage(@Param("url") String url,@Param("fileName") String fileName);
+
+    int doQueryOrderNum();
 }

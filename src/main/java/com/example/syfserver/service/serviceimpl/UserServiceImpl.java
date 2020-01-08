@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.syfserver.tools.RemovePassword.removePassword;
 import static com.example.syfserver.constant.Resource.USER_IMAGE_ADDRESS;
@@ -106,5 +108,12 @@ public class UserServiceImpl implements UserService {
 
         }
         return url.toString();
+    }
+
+    @Override
+    public Map<String, Object> queryIndexInfo() {
+        Map<String, Object> infoMap = new HashMap<>();
+        infoMap.put("orderNum",userdao.doQueryOrderNum());
+        return infoMap;
     }
 }

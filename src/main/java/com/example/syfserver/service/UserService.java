@@ -4,6 +4,7 @@ import com.example.syfserver.entity.UserEntity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 
 public interface UserService {
@@ -21,4 +22,6 @@ public interface UserService {
     void editUser(UserEntity editUserEntity);
 
     String uploadImage(File file,String fileName);
+
+    Map<String ,Object> queryIndexInfo();
 }

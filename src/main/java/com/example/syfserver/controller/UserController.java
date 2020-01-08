@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
@@ -35,7 +37,7 @@ public class UserController {
     @Resource
     private RedisService redisService;
     @Resource
-    private ValueOperations<String,Object> valueOperations;
+    private ValueOperations<String, Object> valueOperations;
 
     @RequestMapping("/login")
     public DtoEntity userLogin(@RequestBody UserEntity loginUser, HttpServletRequest request) {
@@ -49,21 +51,23 @@ public class UserController {
             String userAgent = request.getHeader("user-agent");
             String token = this.tokenService.generateToken(userAgent, user.getName());
 
-            valueOperations.set(token,user.toString());
-            redisService.expireKey(token,1800, TimeUnit.SECONDS);
-            String lastTime = (String)valueOperations.get("lastLoginTime");
-            String lastExpiryTime = (String)valueOperations.get("lastExpiryLoginTime");
+            valueOperations.set(token, user.toString());
+            redisService.expireKey(token, 1800, TimeUnit.SECONDS);
+            String lastTime = (String) valueOperations.get(user.getName());
+            Integer visit = (Integer) valueOperations.get("visitNum");
+            if (visit == null) {
+                visit = 0;
+            }
 
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime lastLoginTime = LocalDateTime.now();
-            LocalDateTime expiryDateTime = lastLoginTime.plusSeconds(10);
-            valueOperations.set("lastLoginTime",lastLoginTime.format(df));
-            valueOperations.set("lastExpiryLoginTime",expiryDateTime.format(df));
+            valueOperations.set(user.getName(), lastLoginTime.format(df));
+            valueOperations.set("visitNum", visit + 1);
 
             dto.setIsLogin("true");
             dto.setToken(token);
             dto.setTokenCreatedTime(lastTime);
-            dto.setTokenExpiryTime(lastExpiryTime);
+            dto.setTokenExpiryTime(String.valueOf(visit + 1));
             dto.setReturnObj(user);
         } else {
             dto.setIsLogin("false");
@@ -99,5 +103,12 @@ public class UserController {
         File file = MultipartFileToFile(multipartFile);
         String imageUrl = userService.uploadImage(file, name);
         return imageUrl;
+    }
+
+    @RequestMapping("/info")
+    public DtoEntity getIndexInfo() {
+        DtoEntity dtoEntity = new DtoEntity();
+        dtoEntity.setReturnObj(userService.queryIndexInfo());
+        return dtoEntity;
     }
 }

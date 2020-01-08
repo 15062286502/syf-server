@@ -31,4 +31,7 @@
     <update id="uploadImage" parameterType="String">
         update user set image = #{url} where name = #{fileName}
     </update>
+    <select id="doQueryOrderNum" resultType="int">
+SELECT (SELECT COUNT(1) FROM take_in_order) + (SELECT COUNT(1) FROM take_out_order) TOTAL;
+    </select>
 </mapper>
