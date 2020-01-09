@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> queryIndexInfo() {
         Map<String, Object> infoMap = new HashMap<>();
         infoMap.put("orderNum",userdao.doQueryOrderNum());
+        infoMap.put("percent",userdao.doQueryPercent());
         return infoMap;
     }
 }

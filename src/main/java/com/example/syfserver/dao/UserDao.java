@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -32,4 +33,6 @@ public interface UserDao {
     void uploadImage(@Param("url") String url,@Param("fileName") String fileName);
 
     int doQueryOrderNum();
+
+    List<Map<String,String>> doQueryPercent();
 }

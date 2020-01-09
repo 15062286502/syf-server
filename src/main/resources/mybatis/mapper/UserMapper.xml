@@ -31,7 +31,12 @@
     <update id="uploadImage" parameterType="String">
         update user set image = #{url} where name = #{fileName}
     </update>
+    <select id="doQueryPercent" resultType="Map" >
+        select role,CONCAT(ROUND(count(*)/(select count(1) FROM user)*100,2),'%') as percent
+        from user group by role order by percent desc
+    </select>
+
     <select id="doQueryOrderNum" resultType="int">
-SELECT (SELECT COUNT(1) FROM take_in_order) + (SELECT COUNT(1) FROM take_out_order) TOTAL;
+        SELECT (SELECT COUNT(1) FROM take_in_order) + (SELECT COUNT(1) take_out_order) TOTAL;
     </select>
 </mapper>
