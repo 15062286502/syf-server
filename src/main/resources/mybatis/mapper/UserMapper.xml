@@ -32,11 +32,27 @@
         update user set image = #{url} where name = #{fileName}
     </update>
     <select id="doQueryPercent" resultType="Map" >
-        select role,CONCAT(ROUND(count(*)/(select count(1) FROM user)*100,2),'%') as percent
+        select role,CONCAT(ROUND(count(*)/(select count(1) FROM user)*100,0),'%') as percent
         from user group by role order by percent desc
     </select>
 
     <select id="doQueryOrderNum" resultType="int">
         SELECT (SELECT COUNT(1) FROM take_in_order) + (SELECT COUNT(1) take_out_order) TOTAL;
+    </select>
+
+    <select id="doQueryInDataByDay" resultType="Map">
+        select day(createTime) chartDay, count(1) chartNum from take_in_order where createTime >= date(now()) - interval 7 day group by day(createTime)
+    </select>
+
+    <select id="doQueryOutDataByDay" resultType="Map">
+        select day(createTime) chartDay, count(1) chartNum from take_out_order where createTime >= date(now()) - interval 7 day group by day(createTime)
+    </select>
+
+    <select id="doQueryInDataByMonth" resultType="Map">
+        select month(createTime) chartDay , count(1) chartNum from take_in_order where createTime >= date(now()) - interval 5 month group by month(createTime)
+    </select>
+
+    <select id="doQueryOutDataByMonth" resultType="Map">
+        select month(createTime) chartDay , count(1) chartNum from take_out_order where createTime >= date(now()) - interval 5 month group by month(createTime)
     </select>
 </mapper>

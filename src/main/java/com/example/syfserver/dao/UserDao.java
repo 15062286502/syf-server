@@ -35,4 +35,12 @@ public interface UserDao {
     int doQueryOrderNum();
 
     List<Map<String,String>> doQueryPercent();
+
+    List<Map<String,String>> doQueryInDataByDay();
+
+    List<Map<String,String>> doQueryOutDataByDay();
+
+    List<Map<String,String>> doQueryOutDataByMonth();
+
+    List<Map<String,String>> doQueryInDataByMonth();
 }

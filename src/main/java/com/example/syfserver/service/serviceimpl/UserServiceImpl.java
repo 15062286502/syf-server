@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.example.syfserver.tools.RemovePassword.removePassword;
 import static com.example.syfserver.constant.Resource.USER_IMAGE_ADDRESS;
@@ -115,6 +112,70 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> infoMap = new HashMap<>();
         infoMap.put("orderNum",userdao.doQueryOrderNum());
         infoMap.put("percent",userdao.doQueryPercent());
+        //近五天的柱状图数据
+        Map<String, Object> handleChartMap = handleChartData(userdao.doQueryInDataByDay(), userdao.doQueryOutDataByDay());
+        infoMap.putAll(handleChartMap);
         return infoMap;
+    }
+
+    private Map<String,Object> handleChartData(List<Map<String, String>> inData,List<Map<String, String>> outData){
+        Map<String,Object> handleChartMap = new HashMap<>();
+
+        List<String> chartInList = new ArrayList<>();
+        List<Map<String,Object>> chartMap = new ArrayList<>();
+
+        Map<String,Object> inMap = new HashMap<>();
+        Map<String,Object> outMap = new HashMap<>();
+
+        List<String> inList = new ArrayList<>();
+        List<String> outList = new ArrayList<>();
+
+        Map<String,String> inRealte = new HashMap<>();
+        Map<String,String> outRealte = new HashMap<>();
+        for (Map<String, String> chart:
+                inData) {
+            chartInList.add(chart.get("chartDay"));
+            inRealte.put(chart.get("chartDay"),chart.get("chartNum").toString());
+        }
+        //inMap.put("data",inList);
+        inMap.put("label","店内订单");
+
+        List<String> chartOutList = new ArrayList<>();
+        for (Map<String, String> chart:
+                outData) {
+            chartOutList.add(chart.get("chartDay"));
+            outRealte.put(chart.get("chartDay"),chart.get("chartNum").toString());
+        }
+
+        //outMap.put("data",outList);
+        outMap.put("label","外卖订单");
+
+        chartInList.removeAll(chartOutList);
+        chartInList.addAll(chartOutList);
+
+            for (String day:
+        chartInList) {
+            if (inRealte.get(day)!=null){
+                inList.add(inRealte.get(day));
+            }else {
+                inList.add("0");
+            }
+
+            if (outRealte.get(day)!=null){
+                outList.add(outRealte.get(day));
+            }else {
+                outList.add("0");
+            }
+
+        }
+
+        inMap.put("data",inList);
+        outMap.put("data",outList);
+        chartMap.add(inMap);
+        chartMap.add(outMap);
+
+        handleChartMap.put("dayNum",chartInList);
+        handleChartMap.put("dayBottom",chartMap);
+        return handleChartMap;
     }
 }
