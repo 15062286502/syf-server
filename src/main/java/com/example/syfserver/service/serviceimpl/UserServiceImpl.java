@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public List<?> queryUserPageContext(int start, int pageSize, String queryName) {
         List<UserEntity> security;
         if (queryName.equals("") || queryName == null) {
-             security = userdao.userPageContext(start, pageSize);
+            security = userdao.userPageContext(start, pageSize);
             return removePassword(security);
         } else {
             security = userdao.queryNameResult(queryName, start, pageSize);
@@ -110,72 +110,72 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> queryIndexInfo() {
         Map<String, Object> infoMap = new HashMap<>();
-        infoMap.put("orderNum",userdao.doQueryOrderNum());
-        infoMap.put("percent",userdao.doQueryPercent());
+        infoMap.put("orderNum", userdao.doQueryOrderNum());
+        infoMap.put("percent", userdao.doQueryPercent());
         //近五天的柱状图数据
         Map<String, Object> handleChartMap = handleChartData(userdao.doQueryInDataByDay(), userdao.doQueryOutDataByDay());
         infoMap.putAll(handleChartMap);
         return infoMap;
     }
 
-    private Map<String,Object> handleChartData(List<Map<String, String>> inData,List<Map<String, String>> outData){
-        Map<String,Object> handleChartMap = new HashMap<>();
+    private Map<String, Object> handleChartData(List<Map<String, Integer>> inData, List<Map<String, Integer>> outData) {
+        Map<String, Object> handleChartMap = new HashMap<>();
 
         List<String> chartInList = new ArrayList<>();
-        List<Map<String,Object>> chartMap = new ArrayList<>();
+        List<Map<String, Object>> chartMap = new ArrayList<>();
 
-        Map<String,Object> inMap = new HashMap<>();
-        Map<String,Object> outMap = new HashMap<>();
+        Map<String, Object> inMap = new HashMap<>();
+        Map<String, Object> outMap = new HashMap<>();
 
-        List<String> inList = new ArrayList<>();
-        List<String> outList = new ArrayList<>();
+        List<Object> inList = new ArrayList<>();
+        List<Object> outList = new ArrayList<>();
 
-        Map<String,String> inRealte = new HashMap<>();
-        Map<String,String> outRealte = new HashMap<>();
-        for (Map<String, String> chart:
+        Map<String, Object> inRealte = new HashMap<>();
+        Map<String, Object> outRealte = new HashMap<>();
+        for (Map<String, Integer> chart :
                 inData) {
-            chartInList.add(chart.get("chartDay"));
-            inRealte.put(chart.get("chartDay"),chart.get("chartNum").toString());
+            chartInList.add(String.valueOf(chart.get("chartDay")) + "号");
+            inRealte.put(String.valueOf(chart.get("chartDay")) + "号", chart.get("chartNum"));
         }
         //inMap.put("data",inList);
-        inMap.put("label","店内订单");
+        inMap.put("label", "店内订单");
 
         List<String> chartOutList = new ArrayList<>();
-        for (Map<String, String> chart:
+        for (Map<String, Integer> chart :
                 outData) {
-            chartOutList.add(chart.get("chartDay"));
-            outRealte.put(chart.get("chartDay"),chart.get("chartNum").toString());
+            chartOutList.add(String.valueOf(chart.get("chartDay")) + "号");
+            outRealte.put(String.valueOf(chart.get("chartDay")) + "号", chart.get("chartNum"));
         }
 
         //outMap.put("data",outList);
-        outMap.put("label","外卖订单");
+        outMap.put("label", "外卖订单");
 
         chartInList.removeAll(chartOutList);
         chartInList.addAll(chartOutList);
 
-            for (String day:
-        chartInList) {
-            if (inRealte.get(day)!=null){
+        for (String day :
+                chartInList) {
+            if (inRealte.get(day) != null) {
                 inList.add(inRealte.get(day));
-            }else {
+            } else {
                 inList.add("0");
             }
 
-            if (outRealte.get(day)!=null){
+            if (outRealte.get(day) != null) {
                 outList.add(outRealte.get(day));
-            }else {
+            } else {
                 outList.add("0");
             }
 
         }
 
-        inMap.put("data",inList);
-        outMap.put("data",outList);
+        inMap.put("data", inList);
+        outMap.put("data", outList);
         chartMap.add(inMap);
         chartMap.add(outMap);
 
-        handleChartMap.put("dayNum",chartInList);
-        handleChartMap.put("dayBottom",chartMap);
+        handleChartMap.put("dayNum", chartInList);
+        handleChartMap.put("dayBottom", chartMap);
         return handleChartMap;
     }
 }

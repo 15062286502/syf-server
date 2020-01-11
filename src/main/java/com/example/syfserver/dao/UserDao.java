@@ -36,9 +36,9 @@ public interface UserDao {
 
     List<Map<String,String>> doQueryPercent();
 
-    List<Map<String,String>> doQueryInDataByDay();
+    List<Map<String,Integer>> doQueryInDataByDay();
 
-    List<Map<String,String>> doQueryOutDataByDay();
+    List<Map<String,Integer>> doQueryOutDataByDay();
 
     List<Map<String,String>> doQueryOutDataByMonth();
 
