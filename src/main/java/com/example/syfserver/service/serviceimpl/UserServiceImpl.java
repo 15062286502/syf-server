@@ -113,12 +113,14 @@ public class UserServiceImpl implements UserService {
         infoMap.put("orderNum", userdao.doQueryOrderNum());
         infoMap.put("percent", userdao.doQueryPercent());
         //近五天的柱状图数据
-        Map<String, Object> handleChartMap = handleChartData(userdao.doQueryInDataByDay(), userdao.doQueryOutDataByDay());
+        Map<String, Object> handleChartMap = handleChartData(userdao.doQueryInDataByDay(), userdao.doQueryOutDataByDay(),"号");
+        Map<String, Object> handleChartMonthMap = handleChartData(userdao.doQueryInDataByMonth(), userdao.doQueryOutDataByMonth(),"月");
         infoMap.putAll(handleChartMap);
+        infoMap.putAll(handleChartMonthMap);
         return infoMap;
     }
 
-    private Map<String, Object> handleChartData(List<Map<String, Integer>> inData, List<Map<String, Integer>> outData) {
+    private Map<String, Object> handleChartData(List<Map<String, Integer>> inData, List<Map<String, Integer>> outData,String type) {
         Map<String, Object> handleChartMap = new HashMap<>();
 
         List<String> chartInList = new ArrayList<>();
@@ -134,8 +136,8 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> outRealte = new HashMap<>();
         for (Map<String, Integer> chart :
                 inData) {
-            chartInList.add(String.valueOf(chart.get("chartDay")) + "号");
-            inRealte.put(String.valueOf(chart.get("chartDay")) + "号", chart.get("chartNum"));
+            chartInList.add(String.valueOf(chart.get("chartDay")) + type);
+            inRealte.put(String.valueOf(chart.get("chartDay")) + type, chart.get("chartNum"));
         }
         //inMap.put("data",inList);
         inMap.put("label", "店内订单");
@@ -143,8 +145,8 @@ public class UserServiceImpl implements UserService {
         List<String> chartOutList = new ArrayList<>();
         for (Map<String, Integer> chart :
                 outData) {
-            chartOutList.add(String.valueOf(chart.get("chartDay")) + "号");
-            outRealte.put(String.valueOf(chart.get("chartDay")) + "号", chart.get("chartNum"));
+            chartOutList.add(String.valueOf(chart.get("chartDay")) + type);
+            outRealte.put(String.valueOf(chart.get("chartDay")) + type, chart.get("chartNum"));
         }
 
         //outMap.put("data",outList);
@@ -174,8 +176,14 @@ public class UserServiceImpl implements UserService {
         chartMap.add(inMap);
         chartMap.add(outMap);
 
-        handleChartMap.put("dayNum", chartInList);
-        handleChartMap.put("dayBottom", chartMap);
+        if ("号".equals(type)){
+            handleChartMap.put("dayNum", chartInList);
+            handleChartMap.put("dayBottom", chartMap);
+        }else{
+            handleChartMap.put("monthNum", chartInList);
+            handleChartMap.put("monthBottom", chartMap);
+        }
+
         return handleChartMap;
     }
 }

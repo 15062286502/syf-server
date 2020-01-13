@@ -40,7 +40,7 @@ public interface UserDao {
 
     List<Map<String,Integer>> doQueryOutDataByDay();
 
-    List<Map<String,String>> doQueryOutDataByMonth();
+    List<Map<String,Integer>> doQueryOutDataByMonth();
 
-    List<Map<String,String>> doQueryInDataByMonth();
+    List<Map<String,Integer>> doQueryInDataByMonth();
 }
