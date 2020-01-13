@@ -24,4 +24,6 @@ public interface UserService {
     String uploadImage(File file,String fileName);
 
     Map<String ,Object> queryIndexInfo();
+
+    Map<String,List<?>> queryMenuByRole(String role);
 }

@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
@@ -111,4 +109,12 @@ public class UserController {
         dtoEntity.setReturnObj(userService.queryIndexInfo());
         return dtoEntity;
     }
+
+    @RequestMapping("/getMenuByRole")
+    public DtoEntity getMenuByRole(@RequestBody String role) {
+        DtoEntity dtoEntity = new DtoEntity();
+        dtoEntity.setReturnObj(userService.queryMenuByRole(role));
+        return dtoEntity;
+    }
+
 }

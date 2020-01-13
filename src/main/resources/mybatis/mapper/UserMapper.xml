@@ -55,4 +55,12 @@
     <select id="doQueryOutDataByMonth" resultType="Map">
         select month(createTime) chartDay , count(1) chartNum from take_out_order where createTime >= date(now()) - interval 5 month group by month(createTime)
     </select>
+
+    <select id="doQueryMenuByRole" resultType="Map">
+      select id , name from menu
+    </select>
+
+    <select id="doQueryAllocatedQueryMenuId" resultType="int" parameterType="String">
+      select menu_id from user_menu where user_role = #{role}
+    </select>
 </mapper>

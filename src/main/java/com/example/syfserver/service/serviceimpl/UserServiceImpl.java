@@ -120,6 +120,13 @@ public class UserServiceImpl implements UserService {
         return infoMap;
     }
 
+    @Override
+    public Map<String, List<?>> queryMenuByRole(String role) {
+        System.out.println(userdao.doQueryMenuByRole());
+        System.out.println(userdao.doQueryAllocatedQueryMenuId(role));
+        return null;
+    }
+
     private Map<String, Object> handleChartData(List<Map<String, Integer>> inData, List<Map<String, Integer>> outData,String type) {
         Map<String, Object> handleChartMap = new HashMap<>();
 

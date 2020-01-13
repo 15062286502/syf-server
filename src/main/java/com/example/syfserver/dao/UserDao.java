@@ -43,4 +43,8 @@ public interface UserDao {
     List<Map<String,Integer>> doQueryOutDataByMonth();
 
     List<Map<String,Integer>> doQueryInDataByMonth();
+
+    List<Map<Integer,String>> doQueryMenuByRole();
+
+    List<Integer> doQueryAllocatedQueryMenuId(String role);
 }
