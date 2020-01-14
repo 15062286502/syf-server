@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.syfserver.tools.Encrypter.getMD5;
@@ -117,4 +118,11 @@ public class UserController {
         return dtoEntity;
     }
 
+    @RequestMapping("/setMenuByRole")
+    public DtoEntity setMenuByRole(@RequestBody List<Object> menuList) {
+        DtoEntity dtoEntity = new DtoEntity();
+        userService.updateMenuByRole(menuList);
+        dtoEntity.setIsLogin("true");
+        return dtoEntity;
+    }
 }

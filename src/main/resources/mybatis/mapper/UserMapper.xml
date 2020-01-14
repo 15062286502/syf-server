@@ -63,4 +63,13 @@
     <select id="doQueryAllocatedQueryMenuId" resultType="int" parameterType="String">
       select menu_id from user_menu where user_role = #{role}
     </select>
+
+    <insert id="doUpdateMenuRelated">
+        insert into user_menu values (#{role},#{menuId})
+    </insert>
+
+    <delete id="doQueryMenuRelated"  >
+      delete from user_menu where user_role = #{role}
+    </delete>
+
 </mapper>

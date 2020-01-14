@@ -25,5 +25,7 @@ public interface UserService {
 
     Map<String ,Object> queryIndexInfo();
 
-    Map<String,List<?>> queryMenuByRole(String role);
+    Map<String,Object> queryMenuByRole(String role);
+
+    void updateMenuByRole(List<Object> transferList);
 }

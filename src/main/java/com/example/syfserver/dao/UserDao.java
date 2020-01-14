@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,11 @@ public interface UserDao {
 
     List<Map<String,Integer>> doQueryInDataByMonth();
 
-    List<Map<Integer,String>> doQueryMenuByRole();
+    List<Map<String,Object>> doQueryMenuByRole();
 
     List<Integer> doQueryAllocatedQueryMenuId(String role);
+
+    void doUpdateMenuRelated(@Param("role")String role,@Param("menuId")Integer menuId);
+
+    void doQueryMenuRelated(String role);
 }

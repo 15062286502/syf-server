@@ -121,10 +121,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, List<?>> queryMenuByRole(String role) {
-        System.out.println(userdao.doQueryMenuByRole());
-        System.out.println(userdao.doQueryAllocatedQueryMenuId(role));
-        return null;
+    public Map<String, Object> queryMenuByRole(String role) {
+        Map<String, Object> transferDataMap = new HashMap<>();
+        List<Map<String, Object>> menuMap = userdao.doQueryMenuByRole();
+
+        List<Map<String,Object>> finalMenuList = new ArrayList<>();
+        for (Map<String, Object> menu:
+        menuMap) {
+            Map<String,Object> keyMap = new HashMap<>();
+            keyMap.put("key",menu.get("id"));
+            keyMap.put("label",menu.get("name"));
+            finalMenuList.add(keyMap);
+        }
+
+        List<Integer> allcotatedMenu = userdao.doQueryAllocatedQueryMenuId(role);
+        transferDataMap.put("all",finalMenuList);
+        transferDataMap.put("already",allcotatedMenu);
+        return transferDataMap;
+    }
+
+    @Override
+    public void updateMenuByRole(List<Object> transferList) {
+            String role = (String)transferList.get(0);
+            List<Integer> menuIDs = (List<Integer>)transferList.get(1);
+        userdao.doQueryMenuRelated(role);
+        for (Integer id:
+        menuIDs) {
+                userdao.doUpdateMenuRelated(role,id);
+        }
+
     }
 
     private Map<String, Object> handleChartData(List<Map<String, Integer>> inData, List<Map<String, Integer>> outData,String type) {
