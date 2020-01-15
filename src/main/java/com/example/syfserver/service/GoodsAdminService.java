@@ -2,6 +2,7 @@ package com.example.syfserver.service;
 
 import com.example.syfserver.entity.DtoEntity;
 import com.example.syfserver.entity.GoodsEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
@@ -20,4 +21,6 @@ public interface GoodsAdminService {
     void doUpdateGood(GoodsEntity goodsEntity);
 
     List<?> getGoodByName(String goodName,String goodId);
+
+    DtoEntity importGoods(MultipartFile file);
 }

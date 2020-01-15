@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.syfserver.tools.TransferFile.MultipartFileToFile;
 
@@ -70,4 +71,13 @@ public class GoodController {
 
         return dtoEntity;
     }
+
+
+    @RequestMapping("/importGoods")
+    public DtoEntity importGoods(HttpServletRequest request, MultipartHttpServletRequest multiReq) {
+        String fileName = request.getParameter("name");
+        MultipartFile multipartFile = multiReq.getFile("file");
+        return goodsAdminService.importGoods(multipartFile);
+    }
+
 }
