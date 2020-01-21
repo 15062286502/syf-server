@@ -1,6 +1,7 @@
 package com.example.syfserver.service.serviceimpl;
 
 import com.example.syfserver.dao.UserDao;
+import com.example.syfserver.entity.Address;
 import com.example.syfserver.entity.UserEntity;
 import com.example.syfserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.example.syfserver.tools.RemovePassword.removePassword;
-import static com.example.syfserver.constant.Resource.USER_IMAGE_ADDRESS;
-import static com.example.syfserver.constant.Resource.USER_IMAGE_URL;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private Address address;
+
     @Autowired
     private UserDao userdao;
 
@@ -64,7 +66,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editUser(UserEntity editUserEntity) {
-
         userdao.editUser(editUserEntity);
 
     }
@@ -73,8 +74,8 @@ public class UserServiceImpl implements UserService {
     public String uploadImage(File file, String fileName) {
         InputStream is = null;
         OutputStream os = null;
-        StringBuffer sb = new StringBuffer(USER_IMAGE_ADDRESS);
-        StringBuffer url = new StringBuffer(USER_IMAGE_URL);
+        StringBuffer sb = new StringBuffer(address.USER_IMAGE_ADDRESS);
+        StringBuffer url = new StringBuffer(address.USER_IMAGE_URL);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         String suffix = dateFormat.format(new Date());
         try {

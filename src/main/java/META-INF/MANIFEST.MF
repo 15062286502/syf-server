@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Class-Path: spring-boot-starter-web-2.1.7.RELEASE.jar spring-tx-5.1.9.
+ RELEASE.jar reactive-streams-1.0.2.jar spring-boot-starter-json-2.1.7
+ .RELEASE.jar commons-collections4-4.1.jar fastjson-1.2.41.jar xmlbean
+ s-2.6.0.jar spring-data-keyvalue-2.1.10.RELEASE.jar mybatis-spring-1.
+ 3.1.jar spring-boot-starter-logging-2.1.7.RELEASE.jar snakeyaml-1.23.
+ jar spring-webmvc-5.1.9.RELEASE.jar jul-to-slf4j-1.7.26.jar netty-tra
+ nsport-4.1.38.Final.jar jackson-annotations-2.9.0.jar spring-data-com
+ mons-2.1.10.RELEASE.jar spring-beans-5.1.9.RELEASE.jar UserAgentUtils
+ -1.2.4.jar jackson-datatype-jdk8-2.9.9.jar spring-boot-starter-2.1.7.
+ RELEASE.jar jboss-logging-3.3.2.Final.jar log4j-api-2.11.2.jar spring
+ -context-support-5.1.9.RELEASE.jar slf4j-api-1.7.26.jar poi-ooxml-3.1
+ 4.jar spring-aop-5.1.9.RELEASE.jar mybatis-spring-boot-starter-1.3.1.
+ jar netty-common-4.1.38.Final.jar stax-api-1.0.1.jar spring-web-5.1.9
+ .RELEASE.jar commons-codec-1.11.jar mybatis-3.4.5.jar log4j-to-slf4j-
+ 2.11.2.jar spring-oxm-5.1.9.RELEASE.jar logback-core-1.2.3.jar jackso
+ n-databind-2.9.9.jar spring-boot-starter-jdbc-2.1.7.RELEASE.jar sprin
+ g-jdbc-5.1.9.RELEASE.jar jackson-core-2.9.9.jar jackson-datatype-jsr3
+ 10-2.9.9.jar spring-jcl-5.1.9.RELEASE.jar validation-api-2.0.1.Final.
+ jar javax.annotation-api-1.3.2.jar poi-3.16.jar jackson-module-parame
+ ter-names-2.9.9.jar classmate-1.4.0.jar logback-classic-1.2.3.jar spr
+ ing-context-5.1.9.RELEASE.jar mysql-connector-java-5.1.21.jar netty-b
+ uffer-4.1.38.Final.jar spring-boot-starter-data-redis-2.1.7.RELEASE.j
+ ar spring-core-5.1.9.RELEASE.jar poi-ooxml-schemas-3.14.jar netty-cod
+ ec-4.1.38.Final.jar spring-data-redis-2.1.10.RELEASE.jar spring-boot-
+ 2.1.7.RELEASE.jar spring-boot-devtools-2.1.7.RELEASE.jar curvesapi-1.
+ 03.jar netty-resolver-4.1.38.Final.jar spring-boot-autoconfigure-2.1.
+ 7.RELEASE.jar hibernate-validator-6.0.17.Final.jar netty-handler-4.1.
+ 38.Final.jar spring-expression-5.1.9.RELEASE.jar mybatis-spring-boot-
+ autoconfigure-1.3.1.jar reactor-core-3.2.11.RELEASE.jar HikariCP-3.2.
+ 0.jar lettuce-core-5.1.8.RELEASE.jar
+Main-Class: com.example.syfserver.SyfServerApplication
+
